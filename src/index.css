@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-app-bg: #ffffff;
+  --color-desktop-bg: #f8fafc;
+  --max-width-mobile-frame: 390px;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers the phone frame vertically on desktop viewports */
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-desktop-bg);
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* The absolute rigid shell of the app */
+.mobile-frame {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-width-mobile-frame);
+
+  /* Strictly lock height to exactly the viewport window */
+  height: 100vh;
+  height: 100dvh; /* Uses Dynamic Viewport Height to account for mobile browser URL bars */
+  max-height: 100dvh;
+  min-height: 100dvh;
+
+  background-color: var(--color-app-bg);
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevents the master frame from ever scrolling */
+}
+
+/* Base layout rule for EVERY page component root */
+.page-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%; /* Spans exactly the height of the mobile-frame */
+  overflow: hidden; /* Prevents sub-elements from leaking out */
+}
+
+@media (max-width: 430px) {
+  #root {
+    background-image: none;
+    background-color: var(--color-app-bg);
+  }
+  .mobile-frame {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}
