@@ -55,10 +55,10 @@ export default function LoginPage() {
 
         {/* Unified Graphic Header */}
         <div className='flex flex-col items-center justify-end text-center '>
-          <div className='absolute top-0 left-0 w-full h-[360px] rounded-[32px] '>
-            <img src={authimg} />
+          <div className='absolute top-0 left-0 w-full h-[360px] max-h-[360px] rounded-[32px] '>
+            <img src={authimg} className='h-[360px] max-h-[360px] w-full ' />
           </div>
-          <h1 className='text-xl font-bold text-zinc-900 tracking-tight mt-[390px]'>
+          <h1 className='text-xl font-bold text-zinc-900 tracking-tight mt-[380px]'>
             Welcome
           </h1>
         </div>
