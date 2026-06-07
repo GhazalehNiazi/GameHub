@@ -50,7 +50,7 @@ export function OtpVerificationStep({
         A 5 number code has been texted to your number, please enter it below
       </p>
 
-      <div className='flex justify-between gap-2 max-w-[320px] mx-auto'>
+      <div className='flex justify-between gap-2 max-w-[320px] w-full '>
         {otp.map((digit, idx) => (
           <input
             key={idx}
@@ -64,14 +64,15 @@ export function OtpVerificationStep({
             value={digit}
             onChange={(e) => handleOtpChange(e.target.value, idx)}
             onKeyDown={(e) => handleOtpKeyDown(e, idx)}
-            className='w-12 h-14 bg-white border border-zinc-200 text-zinc-900 text-lg font-bold rounded-xl text-center focus:outline-none focus:border-zinc-900 transition-colors shadow-sm'
+            // 🛠️ FIX: Removed inline style and let Flexbox fill and scale columns uniformly
+            className='flex-1 min-w-0 h-14 bg-white border border-zinc-400 text-zinc-900 text-lg font-bold rounded-xl text-center focus:outline-none focus:border-zinc-900 transition-colors'
           />
         ))}
       </div>
 
-      <div className='flex items-center justify-between text-xs text-zinc-500 font-medium px-1 pt-1'>
+      <div className='flex items-center justify-center gap-5 text-xs text-zinc-800  px-1 pt-1'>
         <span>Code Accountability</span>
-        <span className='font-mono text-zinc-800'>{formatTimer()}</span>
+        <span className=' '>{formatTimer()}</span>
       </div>
     </div>
   );

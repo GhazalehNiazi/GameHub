@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router";
 import { useRegisterStore } from "@/store/registerStore";
 import { AppScreenLayout } from "@/components/shared/AppScreenLayout";
@@ -6,6 +5,7 @@ import { StepProgressBar } from "./components/StepProgressBar";
 import { ProfileDetailsStep } from "./components/ProfileDetailsStep";
 import { GameSelectionStep } from "./components/GameSelectionStep";
 import { SecurityPasswordStep } from "./components/SecurityPasswordStep";
+import backArrowIcon from "@/../public/assets/icons/back-arrow.svg";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -42,24 +42,14 @@ export default function RegisterPage() {
   return (
     <main className='page-content safe-top safe-bottom bg-white'>
       <AppScreenLayout stickyFooter={footerAction}>
-        <button
-          onClick={handleBack}
-          className='p-1 -ml-2 text-zinc-600 hover:text-zinc-900 mb-2 cursor-pointer'
-        >
-          <svg
-            className='w-5 h-5'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2.5'
-            viewBox='0 0 24 24'
+        <div className=' absolute top-5 left-5 h-6 w-full flex items-center mb-2 z-10'>
+          <button
+            onClick={handleBack}
+            className='p-1 -ml-2 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer'
           >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M15.75 19.5L8.25 12l7.5-7.5'
-            />
-          </svg>
-        </button>
+            <img src={backArrowIcon} />
+          </button>
+        </div>
 
         <h1 className='text-lg font-bold text-zinc-900 tracking-tight text-center'>
           Creating Account

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/components/shared/AppScreenLayout";
 import { PhoneFormStep } from "./components/PhoneFormStep";
 import { OtpVerificationStep } from "./components/OtpVerificationStep";
+import authimg from "@/../public/assets/images/auth.png";
+import backArrowIcon from "@/../public/assets/icons/back-arrow.svg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -34,44 +36,27 @@ export default function LoginPage() {
   );
 
   return (
-    <main className='page-content safe-top safe-bottom bg-white'>
-      <AppScreenLayout stickyFooter={footerAction}>
+    <main className='page-content  safe-bottom bg-white'>
+      <AppScreenLayout
+        stickyFooter={footerAction}
+        className='flex flex-col justify-between'
+      >
         {/* Navigation Header Zone */}
-        <div className='h-6 w-full flex items-center mb-2'>
-          {step === 2 && (
+        {step === 2 && (
+          <div className=' absolute top-5 left-5 h-6 w-full flex items-center mb-2 z-10'>
             <button
               onClick={() => setStep(1)}
               className='p-1 -ml-2 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer'
             >
-              <svg
-                className='w-6 h-6'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2.5'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M15.75 19.5L8.25 12l7.5-7.5'
-                />
-              </svg>
+              <img src={backArrowIcon} />
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Unified Graphic Header */}
-        <div className='flex flex-col items-center text-center'>
-          <div className='w-full aspect-[4/3] max-h-48 bg-zinc-100 rounded-3xl overflow-hidden relative border border-zinc-100 shadow-sm'>
-            <div className='absolute inset-0 bg-gradient-to-tr from-zinc-300 via-zinc-100 to-zinc-400 opacity-60'>
-              <svg
-                className='w-full h-full text-zinc-400/30'
-                viewBox='0 0 100 100'
-                preserveAspectRatio='none'
-              >
-                <path d='M0,100 C30,40 70,20 100,100 Z' fill='currentColor' />
-              </svg>
-            </div>
+        <div className='flex flex-col items-center justify-end text-center h-[410px] '>
+          <div className='absolute top-0 left-0 w-full h-[360px] rounded-[32px] '>
+            <img src={authimg} />
           </div>
           <h1 className='text-xl font-bold text-zinc-900 tracking-tight mt-6'>
             Welcome
