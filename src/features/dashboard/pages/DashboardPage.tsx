@@ -1,32 +1,12 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
-import { authService, leagueService, type AuthUser, type LeagueItem } from "@/services/api";
+import { useCurrentUser, useLeagues } from "@/services/hooks";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [leagues, setLeagues] = useState<LeagueItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    let isMounted = true;
-    Promise.all([authService.getCurrentUser(), leagueService.getLeagues()])
-      .then(([userRes, leaguesRes]) => {
-        if (isMounted) {
-          setUser(userRes.data);
-          setLeagues(leaguesRes.data);
-        }
-      })
-      .catch((err) => console.error("Failed to load dashboard data:", err))
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const { data: user } = useCurrentUser();
+  const { data: leagues = [] } = useLeagues();
 
   // Primary task action buttons stacked on top of navigation
   const actionFooter = (

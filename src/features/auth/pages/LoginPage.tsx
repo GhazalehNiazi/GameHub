@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { PhoneFormStep } from "../components/PhoneFormStep";
 import { OtpVerificationStep } from "../components/OtpVerificationStep";
-import { authService } from "@/services/api";
+import { useSendOtp, useVerifyOtp } from "@/services/hooks";
 import authimg from "@/../public/assets/images/auth.png";
 import backArrowIcon from "@/../public/assets/icons/back-arrow.svg";
 
@@ -12,44 +12,50 @@ export default function LoginPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState<string[]>(Array(5).fill(""));
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+
+  const sendOtpMutation = useSendOtp();
+  const verifyOtpMutation = useVerifyOtp();
 
   const isOtpComplete = otp.join("").length === 5;
+  const isPending = sendOtpMutation.isPending || verifyOtpMutation.isPending;
+  const errorMsg =
+    sendOtpMutation.error?.message || verifyOtpMutation.error?.message || "";
 
-  const handleContinue = async () => {
-    setErrorMsg("");
-    setIsLoading(true);
-    try {
-      if (step === 1) {
-        if (phone.trim()) {
-          await authService.sendOtp({ phone });
-          setStep(2);
-        }
-      } else {
-        if (isOtpComplete) {
-          const res = await authService.verifyOtp({ phone, otp: otp.join("") });
-          if (res.data.isExistingUser) {
-            navigate("/dashboard");
-          } else {
-            navigate("/register");
+  const handleContinue = () => {
+    if (step === 1) {
+      if (phone.trim()) {
+        sendOtpMutation.mutate(
+          { phone },
+          {
+            onSuccess: () => setStep(2),
           }
-        }
+        );
       }
-    } catch (err: any) {
-      setErrorMsg(err.message || "An error occurred");
-    } finally {
-      setIsLoading(false);
+    } else {
+      if (isOtpComplete) {
+        verifyOtpMutation.mutate(
+          { phone, otp: otp.join("") },
+          {
+            onSuccess: (res) => {
+              if (res.data.isExistingUser) {
+                navigate("/dashboard");
+              } else {
+                navigate("/register");
+              }
+            },
+          }
+        );
+      }
     }
   };
 
   const footerAction = (
     <button
       onClick={handleContinue}
-      disabled={isLoading || (step === 1 ? !phone : !isOtpComplete)}
+      disabled={isPending || (step === 1 ? !phone : !isOtpComplete)}
       className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 disabled:opacity-40 disabled:hover:bg-zinc-800 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-2'
     >
-      {isLoading ? (
+      {isPending ? (
         <span className='animate-pulse'>Processing...</span>
       ) : (
         "Continue"

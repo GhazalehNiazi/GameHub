@@ -8,14 +8,15 @@ import { AttendeesListStep } from "../components/AttendeesListStep";
 import { LeagueRulesStep } from "../components/LeagueRulesStep";
 import { LeagueReviewStep } from "../components/LeagueReviewStep";
 import { LeagueWaitingStep } from "../components/LeagueWaitingStep";
-import { leagueService } from "@/services/api";
+import { useCreateLeague } from "@/services/hooks";
 
 export default function NewLeagueWizardPage() {
   const navigate = useNavigate();
   const store = useNewLeagueStore();
   const { step, setStep, resetStore } = store;
   const [createdLeagueId, setCreatedLeagueId] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const createLeagueMutation = useCreateLeague();
 
   // Clear data safely when the wizard component unmounts completely
   useEffect(() => {
@@ -27,26 +28,25 @@ export default function NewLeagueWizardPage() {
     else setStep(step - 1);
   };
 
-  // Step 4 trigger: Calls leagueService.createLeague and moves to step 5
-  const handleCreateLeagueSubmit = async (e: React.MouseEvent) => {
+  // Step 4 trigger: Calls useCreateLeague hook and moves to step 5
+  const handleCreateLeagueSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsSubmitting(true);
-    try {
-      const res = await leagueService.createLeague({
+    createLeagueMutation.mutate(
+      {
         leagueName: store.leagueName || "New League",
         fifaVersion: store.fifaVersion || "FC 24",
         attendees: store.attendees,
         gameFormat: store.gameFormat,
         priorityMethod: store.priorityMethod,
-      });
-      setCreatedLeagueId(res.data.id);
-      setStep(5);
-    } catch (err) {
-      console.error("Failed to create league:", err);
-    } finally {
-      setIsSubmitting(false);
-    }
+      },
+      {
+        onSuccess: (res) => {
+          setCreatedLeagueId(res.data.id);
+          setStep(5);
+        },
+      }
+    );
   };
 
   // Step 5 trigger: Clears store data and redirects to final league dashboard
@@ -63,10 +63,10 @@ export default function NewLeagueWizardPage() {
         <button
           type='button'
           onClick={handleCreateLeagueSubmit}
-          disabled={isSubmitting}
+          disabled={createLeagueMutation.isPending}
           className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center block'
         >
-          {isSubmitting ? "Creating League..." : "Create the League"}
+          {createLeagueMutation.isPending ? "Creating League..." : "Create the League"}
         </button>
       );
     }

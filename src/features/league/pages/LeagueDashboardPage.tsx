@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { TabSegmentControl } from "../components/TabSegmentControl";
@@ -6,89 +6,52 @@ import { FixturesTab } from "../components/FixturesTab";
 import { AnalysisTab } from "../components/AnalysisTab";
 import { SettingsTab } from "../components/SettingsTab";
 import { ScoreEntryModal } from "../components/ScoreEntryModal";
-import { leagueService, type LeagueItem } from "@/services/api";
+import {
+  useLeagueDetail,
+  useUpdateMatchScore,
+  useTerminateLeague,
+} from "@/services/hooks";
 import type { LeagueTab, MatchData } from "../types";
 
 export default function LeagueDashboardPage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<LeagueTab>("fixtures");
-  const [leagueData, setLeagueData] = useState<LeagueItem | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [activeModalMatch, setActiveModalMatch] = useState<MatchData | null>(null);
 
   const leagueId = id || "calciopoli-2026";
 
-  useEffect(() => {
-    let isMounted = true;
-    setIsLoading(true);
-    leagueService
-      .getLeagueById(leagueId)
-      .then((res) => {
-        if (isMounted) setLeagueData(res.data);
-      })
-      .catch((err) => {
-        console.error("Failed to load league details:", err);
-      })
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
+  const { data: leagueData, isLoading } = useLeagueDetail(leagueId);
+  const updateScoreMutation = useUpdateMatchScore();
+  const terminateLeagueMutation = useTerminateLeague();
 
-    return () => {
-      isMounted = false;
-    };
-  }, [leagueId]);
-
-  const handleScoreSave = async (matchId: string, homeScore: number, awayScore: number) => {
-    try {
-      const res = await leagueService.updateMatchScore({
+  const handleScoreSave = (matchId: string, homeScore: number, awayScore: number) => {
+    updateScoreMutation.mutate(
+      {
         leagueId,
         matchId,
         homeScore,
         awayScore,
-      });
-
-      setLeagueData((prev) => {
-        if (!prev) return prev;
-        const updatedFixtures = prev.fixtures.map((m) =>
-          m.id === matchId ? { ...m, homeScore, awayScore } : m
-        );
-        return {
-          ...prev,
-          fixtures: updatedFixtures,
-          analysisData: {
-            hasData: true,
-            lastFeaturedMatch: {
-              homePlayer: res.data.homePlayer,
-              homeAvatar: res.data.homeAvatar,
-              homeScore,
-              awayPlayer: res.data.awayPlayer,
-              awayAvatar: res.data.awayAvatar,
-              awayScore,
-            },
-          },
-        };
-      });
-    } catch (err) {
-      console.error("Failed to save score:", err);
-    } finally {
-      setActiveModalMatch(null);
-    }
+      },
+      {
+        onSettled: () => {
+          setActiveModalMatch(null);
+        },
+      }
+    );
   };
 
-  const handleTerminateAction = async () => {
+  const handleTerminateAction = () => {
     if (
       window.confirm(
         "Are you absolutely sure you want to terminate this league?"
       )
     ) {
-      try {
-        await leagueService.terminateLeague(leagueId);
-      } catch (err) {
-        console.error("Failed to terminate league:", err);
-      } finally {
-        navigate("/play");
-      }
+      terminateLeagueMutation.mutate(leagueId, {
+        onSuccess: () => {
+          navigate("/play");
+        },
+      });
     }
   };
 
