@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
@@ -8,10 +8,14 @@ import { AttendeesListStep } from "../components/AttendeesListStep";
 import { LeagueRulesStep } from "../components/LeagueRulesStep";
 import { LeagueReviewStep } from "../components/LeagueReviewStep";
 import { LeagueWaitingStep } from "../components/LeagueWaitingStep";
+import { leagueService } from "@/services/api";
 
 export default function NewLeagueWizardPage() {
   const navigate = useNavigate();
-  const { step, setStep, resetStore } = useNewLeagueStore();
+  const store = useNewLeagueStore();
+  const { step, setStep, resetStore } = store;
+  const [createdLeagueId, setCreatedLeagueId] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Clear data safely when the wizard component unmounts completely
   useEffect(() => {
@@ -23,18 +27,33 @@ export default function NewLeagueWizardPage() {
     else setStep(step - 1);
   };
 
-  // Step 4 trigger: Strictly switches store to step 5 without running any redirect pipelines
-  const handleCreateLeagueSubmit = (e: React.MouseEvent) => {
+  // Step 4 trigger: Calls leagueService.createLeague and moves to step 5
+  const handleCreateLeagueSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setStep(5);
+    setIsSubmitting(true);
+    try {
+      const res = await leagueService.createLeague({
+        leagueName: store.leagueName || "New League",
+        fifaVersion: store.fifaVersion || "FC 24",
+        attendees: store.attendees,
+        gameFormat: store.gameFormat,
+        priorityMethod: store.priorityMethod,
+      });
+      setCreatedLeagueId(res.data.id);
+      setStep(5);
+    } catch (err) {
+      console.error("Failed to create league:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // Step 5 trigger: Clears the temporary store data and sends the user to their final dashboard URL route
+  // Step 5 trigger: Clears store data and redirects to final league dashboard
   const handleStartLeagueFinal = () => {
-    const generatedLeagueId = "calciopoli-2026";
+    const targetId = createdLeagueId || "calciopoli-2026";
     resetStore();
-    navigate(`/league/${generatedLeagueId}`);
+    navigate(`/league/${targetId}`);
   };
 
   // Build the explicit layout actions footers safely
@@ -42,11 +61,12 @@ export default function NewLeagueWizardPage() {
     if (step === 4) {
       return (
         <button
-          type='button' // ← CRITICAL: Keeps this safe from accidental HTML form bubbles
+          type='button'
           onClick={handleCreateLeagueSubmit}
-          className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center block'
+          disabled={isSubmitting}
+          className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center block'
         >
-          Create the League
+          {isSubmitting ? "Creating League..." : "Create the League"}
         </button>
       );
     }

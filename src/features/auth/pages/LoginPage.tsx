@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { PhoneFormStep } from "../components/PhoneFormStep";
 import { OtpVerificationStep } from "../components/OtpVerificationStep";
+import { authService } from "@/services/api";
 import authimg from "@/../public/assets/images/auth.png";
 import backArrowIcon from "@/../public/assets/icons/back-arrow.svg";
 
@@ -11,27 +12,48 @@ export default function LoginPage() {
   const [step, setStep] = useState<1 | 2>(1);
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState<string[]>(Array(5).fill(""));
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const isExistingUser = phone === "000" || phone.slice(-3) === "000";
   const isOtpComplete = otp.join("").length === 5;
 
-  const handleContinue = () => {
-    if (step === 1) {
-      if (phone.trim()) setStep(2);
-    } else {
-      if (isOtpComplete) {
-        navigate(isExistingUser ? "/dashboard" : "/register");
+  const handleContinue = async () => {
+    setErrorMsg("");
+    setIsLoading(true);
+    try {
+      if (step === 1) {
+        if (phone.trim()) {
+          await authService.sendOtp({ phone });
+          setStep(2);
+        }
+      } else {
+        if (isOtpComplete) {
+          const res = await authService.verifyOtp({ phone, otp: otp.join("") });
+          if (res.data.isExistingUser) {
+            navigate("/dashboard");
+          } else {
+            navigate("/register");
+          }
+        }
       }
+    } catch (err: any) {
+      setErrorMsg(err.message || "An error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const footerAction = (
     <button
       onClick={handleContinue}
-      disabled={step === 1 ? !phone : !isOtpComplete}
-      className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 disabled:opacity-40 disabled:hover:bg-zinc-800 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center'
+      disabled={isLoading || (step === 1 ? !phone : !isOtpComplete)}
+      className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 disabled:opacity-40 disabled:hover:bg-zinc-800 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-2'
     >
-      Continue
+      {isLoading ? (
+        <span className='animate-pulse'>Processing...</span>
+      ) : (
+        "Continue"
+      )}
     </button>
   );
 
@@ -65,6 +87,11 @@ export default function LoginPage() {
 
         {/* Render Step Views */}
         <div className='mt-12'>
+          {errorMsg && (
+            <div className='mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center'>
+              {errorMsg}
+            </div>
+          )}
           {step === 1 ? (
             <PhoneFormStep phone={phone} onChange={setPhone} prefix='' />
           ) : (

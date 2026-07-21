@@ -1,8 +1,32 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
+import { authService, leagueService, type AuthUser, type LeagueItem } from "@/services/api";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [leagues, setLeagues] = useState<LeagueItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    Promise.all([authService.getCurrentUser(), leagueService.getLeagues()])
+      .then(([userRes, leaguesRes]) => {
+        if (isMounted) {
+          setUser(userRes.data);
+          setLeagues(leaguesRes.data);
+        }
+      })
+      .catch((err) => console.error("Failed to load dashboard data:", err))
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Primary task action buttons stacked on top of navigation
   const actionFooter = (
@@ -38,7 +62,7 @@ export default function DashboardPage() {
           {/* User Profile Context Row Right Controls */}
           <div className='flex items-center gap-2.5'>
             <div className='w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-xl shadow-sm border border-white'>
-              🐵
+              {user?.avatar || "🐵"}
             </div>
 
             <button className='w-9 h-9 rounded-full border border-zinc-200/80 flex items-center justify-center hover:bg-zinc-50 active:scale-95 transition-transform text-sm cursor-pointer'>
@@ -47,33 +71,68 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Primary Empty State Illustrative Section */}
-        <div className='flex flex-col items-center justify-center mt-8 text-center px-2 animate-fade-in'>
-          {/* Stylized Illustration Box matching your graphic canvas structure */}
-          <div className='w-52 h-64 relative flex items-center justify-center select-none'>
-            <div className='absolute inset-0 bg-radial from-zinc-100 to-transparent scale-125 opacity-40' />
-
-            {/* Custom SVG mockup mimicking your structural soccer character illustration */}
-            <div className='flex flex-col items-center relative z-10'>
-              <span className='text-6xl animate-pulse'>🏃‍♂️</span>
-              <div className='mt-4 font-black text-4xl italic tracking-tighter text-zinc-800 flex flex-col uppercase leading-none'>
-                <span>SORRY</span>
-                <span className='text-red-500 pl-4'>Y!</span>
-              </div>
+        {/* Primary Content / Active Leagues Section */}
+        {leagues.length > 0 ? (
+          <div className='mt-6 animate-fade-in'>
+            <h2 className='text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3 text-left'>
+              Active Leagues ({leagues.length})
+            </h2>
+            <div className='space-y-3'>
+              {leagues.map((league) => (
+                <div
+                  key={league.id}
+                  onClick={() => navigate(`/league/${league.id}`)}
+                  className='p-4 bg-zinc-50 border border-zinc-200/80 rounded-2xl flex items-center justify-between hover:bg-zinc-100 transition-colors cursor-pointer'
+                >
+                  <div className='flex items-center gap-3'>
+                    <div className='w-10 h-10 rounded-full bg-amber-100 border flex items-center justify-center text-lg'>
+                      🏆
+                    </div>
+                    <div className='text-left'>
+                      <h3 className='font-bold text-sm text-zinc-900'>
+                        {league.name}
+                      </h3>
+                      <p className='text-xs text-zinc-500'>
+                        {league.fifaVersion} • {league.attendees.length} Members
+                      </p>
+                    </div>
+                  </div>
+                  <span className='text-xs text-indigo-600 font-semibold'>
+                    View ›
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
+        ) : (
+          /* Primary Empty State Illustrative Section */
+          <div className='flex flex-col items-center justify-center mt-8 text-center px-2 animate-fade-in'>
+            {/* Stylized Illustration Box matching your graphic canvas structure */}
+            <div className='w-52 h-64 relative flex items-center justify-center select-none'>
+              <div className='absolute inset-0 bg-radial from-zinc-100 to-transparent scale-125 opacity-40' />
 
-          {/* Informational Callout matching the copy text of Figma mocks */}
-          <div className='flex items-start gap-3 mt-6 p-4 bg-zinc-50/80 border border-zinc-100 rounded-2xl text-left max-w-[320px]'>
-            <span className='text-zinc-400 text-lg leading-none mt-0.5'>
-              ℹ️
-            </span>
-            <p className='text-xs text-zinc-600 leading-relaxed font-medium'>
-              You have not played any game till now, worse than that, you don't
-              have any friends.
-            </p>
+              {/* Custom SVG mockup mimicking your structural soccer character illustration */}
+              <div className='flex flex-col items-center relative z-10'>
+                <span className='text-6xl animate-pulse'>🏃‍♂️</span>
+                <div className='mt-4 font-black text-4xl italic tracking-tighter text-zinc-800 flex flex-col uppercase leading-none'>
+                  <span>SORRY</span>
+                  <span className='text-red-500 pl-4'>Y!</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Informational Callout matching the copy text of Figma mocks */}
+            <div className='flex items-start gap-3 mt-6 p-4 bg-zinc-50/80 border border-zinc-100 rounded-2xl text-left max-w-[320px]'>
+              <span className='text-zinc-400 text-lg leading-none mt-0.5'>
+                ℹ️
+              </span>
+              <p className='text-xs text-zinc-600 leading-relaxed font-medium'>
+                You have not played any game till now, worse than that, you don't
+                have any friends.
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </AppScreenLayout>
     </main>
   );

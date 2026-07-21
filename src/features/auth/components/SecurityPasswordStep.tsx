@@ -3,11 +3,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useRegisterStore } from "../store/registerStore";
 import { Input } from "@/shared/components/ui/Input";
+import { authService } from "@/services/api";
 
 export function SecurityPasswordStep() {
   const navigate = useNavigate();
-  const { resetStore } = useRegisterStore();
+  const store = useRegisterStore();
   const [showPass, setShowPass] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const {
     register,
@@ -22,9 +25,24 @@ export function SecurityPasswordStep() {
   const hasMinLength = passwordVal.length >= 8;
   const hasNumAndAlpha = /[A-Za-z]/.test(passwordVal) && /\d/.test(passwordVal);
 
-  const onSubmit = () => {
-    resetStore(); // Finalized successfully
-    navigate("/dashboard");
+  const onSubmit = async (data: { password: "" }) => {
+    setIsSubmitting(true);
+    setApiError("");
+    try {
+      await authService.register({
+        name: store.name || "User",
+        username: store.username || "user123",
+        avatar: store.avatar || "🐵",
+        game: store.game || "FIFA 24",
+        password: data.password,
+      });
+      store.resetStore();
+      navigate("/dashboard");
+    } catch (err: any) {
+      setApiError(err.message || "Failed to create account");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -33,6 +51,11 @@ export function SecurityPasswordStep() {
       onSubmit={handleSubmit(onSubmit)}
       className='space-y-4 animate-fade-in text-left'
     >
+      {apiError && (
+        <div className='p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center'>
+          {apiError}
+        </div>
+      )}
       <p className='text-xs text-zinc-500'>
         Set a password for your account to sign up.
       </p>
