@@ -1,5 +1,7 @@
-import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegisterStore } from "../store/registerStore";
+import { gameSchema, type GameFormValues } from "../schemas/authSchemas";
 
 const FIFA_GAMES = [
   "FC 25",
@@ -14,28 +16,49 @@ const FIFA_GAMES = [
 export function GameSelectionStep() {
   const { game, updateFields, setStep } = useRegisterStore();
 
-  const handleNext = (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<GameFormValues>({
+    resolver: zodResolver(gameSchema),
+    defaultValues: { game: game || "FC 24" },
+  });
+
+  const currentGame = watch("game");
+
+  const onSubmit = (data: GameFormValues) => {
+    updateFields({ game: data.game });
     setStep(3);
+  };
+
+  const handleSelect = (selectedGame: string) => {
+    setValue("game", selectedGame, { shouldValidate: true });
+    updateFields({ game: selectedGame });
   };
 
   return (
     <form
       id='step-form-2'
-      onSubmit={handleNext}
+      onSubmit={handleSubmit(onSubmit)}
       className='space-y-4 animate-fade-in text-left'
     >
       <p className='text-xs text-zinc-600'>
         What was the first Fifa game you remember playing from?
       </p>
 
+      {errors.game && (
+        <p className='text-[10px] text-red-500 pl-1'>{errors.game.message}</p>
+      )}
+
       <div className='space-y-2 max-h-[300px] overflow-y-auto pr-1'>
         {FIFA_GAMES.map((g) => {
-          const isSelected = game === g;
+          const isSelected = currentGame === g;
           return (
             <label
               key={g}
-              onClick={() => updateFields({ game: g })}
+              onClick={() => handleSelect(g)}
               className={`flex items-center justify-between p-3 bg-white border rounded-xl transition-all cursor-pointer ${
                 isSelected
                   ? "border-teal-500 bg-teal-50/10"

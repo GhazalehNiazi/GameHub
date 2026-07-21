@@ -1,19 +1,43 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import { GridOptionCard } from "@/shared/components/ui/GridOptionCard";
+import {
+  leagueRulesSchema,
+  type LeagueRulesFormValues,
+} from "../schemas/leagueSchemas";
 
 export function LeagueRulesStep() {
   const { gameFormat, priorityMethod, updateFields, setStep } =
     useNewLeagueStore();
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStep(4); // Transition forward smoothly to the League Review Summary screen
+  const { handleSubmit, setValue, watch } = useForm<LeagueRulesFormValues>({
+    resolver: zodResolver(leagueRulesSchema),
+    defaultValues: { gameFormat, priorityMethod },
+  });
+
+  const currentGameFormat = watch("gameFormat");
+  const currentPriorityMethod = watch("priorityMethod");
+
+  const onSubmit = (data: LeagueRulesFormValues) => {
+    updateFields(data);
+    setStep(4);
+  };
+
+  const setFormat = (fmt: "single" | "homeAway") => {
+    setValue("gameFormat", fmt);
+    updateFields({ gameFormat: fmt });
+  };
+
+  const setPriority = (prio: "goalDifference" | "faceToFace") => {
+    setValue("priorityMethod", prio);
+    updateFields({ priorityMethod: prio });
   };
 
   return (
     <form
       id='new-league-form-3'
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className='space-y-6 animate-fade-in text-left'
     >
       {/* Parameter Block 1: Format */}
@@ -25,14 +49,14 @@ export function LeagueRulesStep() {
           <GridOptionCard
             icon={<span>↪</span>}
             title='Single Game'
-            isSelected={gameFormat === "single"}
-            onClick={() => updateFields({ gameFormat: "single" })}
+            isSelected={currentGameFormat === "single"}
+            onClick={() => setFormat("single")}
           />
           <GridOptionCard
             icon={<span>🔄</span>}
             title='Home And Away'
-            isSelected={gameFormat === "homeAway"}
-            onClick={() => updateFields({ gameFormat: "homeAway" })}
+            isSelected={currentGameFormat === "homeAway"}
+            onClick={() => setFormat("homeAway")}
           />
         </div>
       </div>
@@ -46,14 +70,14 @@ export function LeagueRulesStep() {
           <GridOptionCard
             icon={<span>⁜</span>}
             title='Goal Difference'
-            isSelected={priorityMethod === "goalDifference"}
-            onClick={() => updateFields({ priorityMethod: "goalDifference" })}
+            isSelected={currentPriorityMethod === "goalDifference"}
+            onClick={() => setPriority("goalDifference")}
           />
           <GridOptionCard
             icon={<span>⊜</span>}
             title='Face To Face Games'
-            isSelected={priorityMethod === "faceToFace"}
-            onClick={() => updateFields({ priorityMethod: "faceToFace" })}
+            isSelected={currentPriorityMethod === "faceToFace"}
+            onClick={() => setPriority("faceToFace")}
           />
         </div>
       </div>

@@ -45,6 +45,7 @@ export interface GridOptionCardProps {
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  error?: string;
 }
 
 export interface SelectOption {
@@ -57,6 +58,7 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   subLabel?: string;
   placeholder?: string;
   options: SelectOption[];
+  error?: string;
 }
 
 export interface SelectableCardProps {

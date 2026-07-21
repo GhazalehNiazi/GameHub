@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import { Input } from "@/shared/components/ui/Input";
 import { Select } from "@/shared/components/ui/Select";
-import type { SetupInputs } from "../types";
+import {
+  leagueSetupSchema,
+  type LeagueSetupFormValues,
+} from "../schemas/leagueSchemas";
 
 const FIFA_VERSIONS = [
   { value: "fc25", label: "EA Sports FC 25" },
@@ -19,13 +23,14 @@ export function LeagueSetupStep() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SetupInputs>({
+  } = useForm<LeagueSetupFormValues>({
+    resolver: zodResolver(leagueSetupSchema),
     defaultValues: { leagueName, fifaVersion },
   });
 
-  const onSubmit = (data: SetupInputs) => {
+  const onSubmit = (data: LeagueSetupFormValues) => {
     updateFields(data);
-    setStep(2); // Advances state machine smoothly to Step 2
+    setStep(2);
   };
 
   return (
@@ -38,13 +43,9 @@ export function LeagueSetupStep() {
         <Input
           label='Set a name for your league'
           placeholder='Name'
-          {...register("leagueName", { required: "League name is required" })}
+          {...register("leagueName")}
+          error={errors.leagueName?.message}
         />
-        {errors.leagueName && (
-          <p className='text-[10px] text-red-500 mt-1 pl-1'>
-            {errors.leagueName.message}
-          </p>
-        )}
       </div>
 
       <div>
@@ -53,15 +54,9 @@ export function LeagueSetupStep() {
           subLabel='Fifa Version'
           placeholder='Select'
           options={FIFA_VERSIONS}
-          {...register("fifaVersion", {
-            required: "Please select a FIFA version",
-          })}
+          {...register("fifaVersion")}
+          error={errors.fifaVersion?.message}
         />
-        {errors.fifaVersion && (
-          <p className='text-[10px] text-red-500 mt-1 pl-1'>
-            {errors.fifaVersion.message}
-          </p>
-        )}
       </div>
     </form>
   );

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
 import { useRegisterStore } from "../store/registerStore";
 import { Input } from "@/shared/components/ui/Input";
 import { useRegisterUser } from "@/services/hooks";
+import { passwordSchema, type PasswordFormValues } from "../schemas/authSchemas";
 
 export function SecurityPasswordStep() {
   const navigate = useNavigate();
@@ -16,7 +18,8 @@ export function SecurityPasswordStep() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<PasswordFormValues>({
+    resolver: zodResolver(passwordSchema),
     defaultValues: { password: "", confirmPassword: "" },
   });
 
@@ -24,7 +27,7 @@ export function SecurityPasswordStep() {
   const hasMinLength = passwordVal.length >= 8;
   const hasNumAndAlpha = /[A-Za-z]/.test(passwordVal) && /\d/.test(passwordVal);
 
-  const onSubmit = (data: { password: string }) => {
+  const onSubmit = (data: PasswordFormValues) => {
     registerMutation.mutate(
       {
         name: store.name || "User",
@@ -61,35 +64,16 @@ export function SecurityPasswordStep() {
         <Input
           placeholder='Password'
           type={showPass ? "text" : "password"}
-          {...register("password", {
-            required: "Password is required",
-            validate: {
-              length: (v) => v.length >= 8 || "Must be at least 8 characters",
-              alphaNum: (v) =>
-                (/[A-Za-z]/.test(v) && /\d/.test(v)) ||
-                "Must contain both letters and numbers",
-            },
-          })}
+          {...register("password")}
+          error={errors.password?.message}
         />
-        {errors.password && (
-          <p className='text-[10px] text-red-500 pl-1'>
-            {errors.password.message}
-          </p>
-        )}
 
         <Input
           placeholder='Password Confirmation'
           type={showPass ? "text" : "password"}
-          {...register("confirmPassword", {
-            required: "Please confirm your password",
-            validate: (v) => v === passwordVal || "Passwords do not match",
-          })}
+          {...register("confirmPassword")}
+          error={errors.confirmPassword?.message}
         />
-        {errors.confirmPassword && (
-          <p className='text-[10px] text-red-500 pl-1'>
-            {errors.confirmPassword.message}
-          </p>
-        )}
       </div>
 
       <label className='flex items-center gap-2 py-1 cursor-pointer select-none'>

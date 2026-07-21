@@ -4,6 +4,7 @@ import type { OtpVerificationStepProps } from "../types";
 export function OtpVerificationStep({
   otp,
   onChange,
+  error,
 }: OtpVerificationStepProps) {
   const [timer, setTimer] = useState(120); // 02:00 minutes
   const otpRefs = useRef<HTMLInputElement[]>([]);
@@ -60,11 +61,14 @@ export function OtpVerificationStep({
             value={digit}
             onChange={(e) => handleOtpChange(e.target.value, idx)}
             onKeyDown={(e) => handleOtpKeyDown(e, idx)}
-            // 🛠️ FIX: Removed inline style and let Flexbox fill and scale columns uniformly
-            className='flex-1 min-w-0 h-14 bg-white border border-zinc-400 text-zinc-900 text-lg font-bold rounded-xl text-center focus:outline-none focus:border-zinc-900 transition-colors'
+            className={`flex-1 min-w-0 h-14 bg-white border ${
+              error ? "border-red-500" : "border-zinc-400"
+            } text-zinc-900 text-lg font-bold rounded-xl text-center focus:outline-none focus:border-zinc-900 transition-colors`}
           />
         ))}
       </div>
+
+      {error && <p className='text-[10px] text-red-500 text-center'>{error}</p>}
 
       <div className='flex items-center justify-center gap-5 text-xs text-zinc-800  px-1 pt-1'>
         <span>Code Accountability</span>

@@ -18,14 +18,16 @@ export interface StepProgressBarProps {
 }
 
 export interface PhoneFormStepProps {
-  phone: string;
-  onChange: (value: string) => void;
+  phone?: string;
+  onChange?: (value: string) => void;
   prefix?: string;
+  error?: string;
 }
 
 export interface OtpVerificationStepProps {
   otp: string[];
   onChange: (otp: string[]) => void;
+  error?: string;
 }
 
 export interface ProfileFormInputs {

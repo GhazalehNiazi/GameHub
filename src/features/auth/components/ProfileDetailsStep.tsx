@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegisterStore } from "../store/registerStore";
 import { Input } from "@/shared/components/ui/Input";
-import type { ProfileFormInputs } from "../types";
+import { profileSchema, type ProfileFormValues } from "../schemas/authSchemas";
 
 export function ProfileDetailsStep() {
   const { name, username, avatar, updateFields, setStep } = useRegisterStore();
@@ -10,11 +11,12 @@ export function ProfileDetailsStep() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProfileFormInputs>({
-    defaultValues: { name, username },
+  } = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: { name, username, avatar },
   });
 
-  const onSubmit = (data: ProfileFormInputs) => {
+  const onSubmit = (data: ProfileFormValues) => {
     updateFields(data);
     setStep(2);
   };
@@ -39,27 +41,15 @@ export function ProfileDetailsStep() {
       <div className='space-y-3'>
         <Input
           placeholder='Name'
-          {...register("name", { required: "Name is required" })}
+          {...register("name")}
+          error={errors.name?.message}
         />
-        {errors.name && (
-          <p className='text-[10px] text-red-500 pl-1'>{errors.name.message}</p>
-        )}
 
         <Input
           placeholder='User Name'
-          {...register("username", {
-            required: "Username is required",
-            pattern: {
-              value: /^[a-zA-Z0-9_]+$/,
-              message: "Alphanumeric and underscores only",
-            },
-          })}
+          {...register("username")}
+          error={errors.username?.message}
         />
-        {errors.username && (
-          <p className='text-[10px] text-red-500 pl-1'>
-            {errors.username.message}
-          </p>
-        )}
       </div>
 
       <div className='flex items-start gap-2 p-3 bg-zinc-50 border rounded-xl'>

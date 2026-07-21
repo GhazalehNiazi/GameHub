@@ -1,14 +1,25 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNewLeagueStore } from "../store/newLeagueStore";
-import type { AttendeesFormInputs } from "../types";
+import {
+  attendeesSchema,
+  type AttendeesFormValues,
+} from "../schemas/leagueSchemas";
 
 export function AttendeesListStep() {
   const { attendees, updateFields, setStep } = useNewLeagueStore();
 
-  const { register, control, handleSubmit, setValue, watch } =
-    useForm<AttendeesFormInputs>({
-      defaultValues: { list: attendees },
-    });
+  const {
+    register,
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<AttendeesFormValues>({
+    resolver: zodResolver(attendeesSchema),
+    defaultValues: { list: attendees },
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -19,9 +30,8 @@ export function AttendeesListStep() {
 
   // Calculate if we have at least 3 successfully resolved and added attendees
   const resolvedCount = currentList.filter((item) => item.resolvedName).length;
-  const isContinueDisabled = resolvedCount < 3;
 
-  const onSubmit = (data: AttendeesFormInputs) => {
+  const onSubmit = (data: AttendeesFormValues) => {
     updateFields({ attendees: data.list });
     setStep(3);
   };
@@ -70,6 +80,11 @@ export function AttendeesListStep() {
             them easier here. For now, search your friend's IDs and add them
           </p>
         </div>
+        {errors.list?.message && (
+          <p className='text-[11px] text-red-500 font-medium pl-1 pt-1'>
+            {errors.list.message}
+          </p>
+        )}
       </div>
 
       {/* Roster Stack */}
