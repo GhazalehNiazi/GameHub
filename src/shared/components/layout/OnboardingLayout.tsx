@@ -1,9 +1,5 @@
 import React from "react";
-
-interface OnboardingLayoutProps {
-  children: React.ReactNode;
-  footerButton: React.ReactNode;
-}
+import type { OnboardingLayoutProps } from "@/shared/types";
 
 export function OnboardingLayout({
   children,

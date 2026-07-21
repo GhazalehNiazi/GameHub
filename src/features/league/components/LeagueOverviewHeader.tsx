@@ -1,20 +1,4 @@
-interface LeagueOverviewHeaderProps {
-  overview: {
-    winnerName: string;
-    winnerAvatar: string;
-    leagueName: string;
-    podium: { username: string; avatar: string; placement: number }[];
-    tieBreakerText: string;
-    highlights: {
-      topScorer: string;
-      topScorerStats: string;
-      bestDefence: string;
-      bestDefenceStats: string;
-      mostGoalsMatch: string;
-    };
-    insights: string[];
-  };
-}
+import type { LeagueOverviewHeaderProps } from "../types";
 
 export function LeagueOverviewHeader({ overview }: LeagueOverviewHeaderProps) {
   const medalIcons = ["🥇", "🥈", "🥉"];

@@ -1,10 +1,5 @@
 import React from "react";
-
-interface ReviewBasicsCardProps {
-  leagueName: string;
-  fifaVersion: string;
-  onEdit: () => void;
-}
+import type { ReviewBasicsCardProps } from "../../types";
 
 export function ReviewBasicsCard({
   leagueName,

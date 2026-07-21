@@ -20,7 +20,7 @@ export default function NewLeagueWizardPage() {
 
   const handleBack = () => {
     if (step === 1) navigate("/play");
-    else setStep((step - 1) as any);
+    else setStep(step - 1);
   };
 
   // Step 4 trigger: Strictly switches store to step 5 without running any redirect pipelines

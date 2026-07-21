@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  useNewLeagueStore,
-  GameFormat,
-  PriorityMethod,
-} from "../store/newLeagueStore";
+import { useNewLeagueStore } from "../store/newLeagueStore";
+import type { GameFormat, PriorityMethod } from "../types";
 import { GridOptionCard } from "@/shared/components/ui/GridOptionCard";
 
 export function LeagueRulesStep() {

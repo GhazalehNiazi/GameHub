@@ -2,11 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRegisterStore } from "../store/registerStore";
 import { Input } from "@/shared/components/ui/Input";
-
-interface ProfileFormInputs {
-  name: string;
-  username: string;
-}
+import type { ProfileFormInputs } from "../types";
 
 export function ProfileDetailsStep() {
   const { name, username, avatar, updateFields, setStep } = useRegisterStore();

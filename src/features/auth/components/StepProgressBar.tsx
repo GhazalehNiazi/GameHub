@@ -1,8 +1,5 @@
 import React from "react";
-
-interface StepProgressBarProps {
-  currentStep: 1 | 2 | 3;
-}
+import type { StepProgressBarProps } from "../types";
 
 export function StepProgressBar({ currentStep }: StepProgressBarProps) {
   return (

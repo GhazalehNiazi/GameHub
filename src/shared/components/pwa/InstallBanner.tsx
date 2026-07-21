@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import { useInstallPrompt } from "@/shared/hooks/useInstallPrompt";
-
-export interface InstallBannerProps {
-  /** Optional callback when the banner is manually dismissed */
-  onDismiss?: () => void;
-}
+import type { InstallBannerProps } from "@/shared/types";
 
 export function InstallBanner({ onDismiss }: InstallBannerProps) {
   const { canInstall, triggerInstall } = useInstallPrompt();

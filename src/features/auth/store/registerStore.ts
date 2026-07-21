@@ -1,20 +1,5 @@
 import { create } from "zustand";
-
-export interface RegisterState {
-  step: 1 | 2 | 3;
-  name: string;
-  username: string;
-  avatar: string;
-  game: string;
-  // Form submission orchestrators
-  setStep: (step: 1 | 2 | 3) => void;
-  updateFields: (
-    fields: Partial<
-      Omit<RegisterState, "setStep" | "updateFields" | "resetStore">
-    >,
-  ) => void;
-  resetStore: () => void;
-}
+import type { RegisterState } from "../types";
 
 export const useRegisterStore = create<RegisterState>((set) => ({
   step: 1,

@@ -1,15 +1,5 @@
-import { openDB, type DBSchema, type IDBPDatabase } from 'idb'
-
-/**
- * Define your IndexedDB schema here.
- * Add stores as your app grows.
- */
-interface AppDB extends DBSchema {
-  drafts: {
-    key: string
-    value: { id: string; content: string; updatedAt: number }
-  }
-}
+import { openDB, type IDBPDatabase } from 'idb'
+import type { AppDB } from '@/shared/types'
 
 let _db: IDBPDatabase<AppDB> | null = null
 

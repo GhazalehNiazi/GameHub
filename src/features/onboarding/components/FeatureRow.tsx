@@ -1,10 +1,5 @@
 import React from "react";
-
-interface FeatureRowProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
+import type { FeatureRowProps } from "../types";
 
 export function FeatureRow({ icon, title, description }: FeatureRowProps) {
   return (

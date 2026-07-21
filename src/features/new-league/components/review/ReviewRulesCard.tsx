@@ -1,10 +1,5 @@
 import React from "react";
-
-interface ReviewRulesCardProps {
-  gameFormat: "single" | "homeAway";
-  priorityMethod: "goalDifference" | "faceToFace";
-  onEdit: () => void;
-}
+import type { ReviewRulesCardProps } from "../../types";
 
 export function ReviewRulesCard({
   gameFormat,

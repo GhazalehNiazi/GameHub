@@ -1,11 +1,6 @@
 import React from "react";
 import { Input } from "@/shared/components/ui/Input";
-
-interface PhoneFormStepProps {
-  phone: string;
-  onChange: (value: string) => void;
-  prefix?: string;
-}
+import type { PhoneFormStepProps } from "../types";
 
 export function PhoneFormStep({ phone, onChange }: PhoneFormStepProps) {
   return (

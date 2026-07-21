@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import { MatchData } from "./FixtureMatchCard";
-
-interface ScoreEntryModalProps {
-  match: MatchData | null;
-  onClose: () => void;
-  onSave: (matchId: string, homeScore: number, awayScore: number) => void;
-}
+import type { MatchData, ScoreEntryModalProps } from "../types";
 
 export function ScoreEntryModal({
   match,

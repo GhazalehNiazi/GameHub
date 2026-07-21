@@ -1,16 +1,5 @@
 import React from "react";
-
-interface SelectOption {
-  value: string;
-  label: string;
-}
-
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label?: string;
-  subLabel?: string;
-  placeholder?: string;
-  options: SelectOption[];
-}
+import type { SelectProps } from "@/shared/types";
 
 export function Select({
   label,

@@ -1,12 +1,5 @@
 import React from "react";
-
-interface SelectableCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description?: string;
-  onClick: () => void;
-  disabled?: boolean;
-}
+import type { SelectableCardProps } from "@/shared/types";
 
 export function SelectableCard({
   icon,

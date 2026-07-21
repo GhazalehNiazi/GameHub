@@ -1,9 +1,6 @@
 import React from "react";
 import { useNewLeagueStore } from "../store/newLeagueStore";
-
-interface LeagueWaitingStepProps {
-  onStart: () => void;
-}
+import type { LeagueWaitingStepProps } from "../types";
 
 export function LeagueWaitingStep({ onStart }: LeagueWaitingStepProps) {
   const { attendees } = useNewLeagueStore();

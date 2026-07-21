@@ -1,16 +1,7 @@
 import React from "react";
 import { BottomNavBar } from "./BottomNavBar";
 import { cn } from "@/shared/utils/cn";
-
-interface AppScreenLayoutProps {
-  children: React.ReactNode;
-  /** Main operational task execution actions (buttons) loaded above navigation bars */
-  stickyFooter?: React.ReactNode;
-  /** Toggle visibility of standard core shell tab systems */
-  showNavigation?: boolean;
-  /** Custom utility classes to append or overwrite the root layout container styles */
-  className?: string;
-}
+import type { AppScreenLayoutProps } from "@/shared/types";
 
 export function AppScreenLayout({
   children,

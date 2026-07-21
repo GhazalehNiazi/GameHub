@@ -1,5 +1,6 @@
 import React from "react";
-import { usePlayStore, PlayMode } from "../store/playStore";
+import { usePlayStore } from "../store/playStore";
+import type { PlayMode } from "../types";
 import { SelectableCard } from "@/shared/components/ui/SelectableCard";
 
 export function ModeSelectionStep() {

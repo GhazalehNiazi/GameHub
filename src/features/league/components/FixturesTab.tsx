@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import { FixtureMatchCard, MatchData } from "./FixtureMatchCard";
+import { FixtureMatchCard } from "./FixtureMatchCard";
 import { LeagueOverviewHeader } from "./LeagueOverviewHeader";
-
-interface FixturesTabProps {
-  matches: MatchData[];
-  onSelectMatch: (match: MatchData) => void;
-  // Optional overview response structure from the API
-  overviewData?: React.ComponentProps<typeof LeagueOverviewHeader>["overview"];
-}
+import type { MatchData, FixturesTabProps } from "../types";
 
 export function FixturesTab({
   matches,

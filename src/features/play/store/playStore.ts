@@ -1,14 +1,6 @@
 import { create } from "zustand";
-
-export type PlayMode = "1v1" | "league" | "tournament" | null;
-
-interface PlayState {
-  currentStep: 1 | 2;
-  selectedMode: PlayMode;
-  setStep: (step: 1 | 2) => void;
-  setMode: (mode: PlayMode) => void;
-  resetPlayFlow: () => void;
-}
+import type { PlayMode, PlayState } from "../types";
+export type { PlayMode };
 
 export const usePlayStore = create<PlayState>((set) => ({
   currentStep: 1,

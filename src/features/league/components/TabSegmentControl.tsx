@@ -1,11 +1,5 @@
 import React from "react";
-
-export type LeagueTab = "fixtures" | "table" | "analysis" | "settings";
-
-interface TabSegmentControlProps {
-  activeTab: LeagueTab;
-  onTabChange: (tab: LeagueTab) => void;
-}
+import type { LeagueTab, TabSegmentControlProps } from "../types";
 
 export function TabSegmentControl({
   activeTab,

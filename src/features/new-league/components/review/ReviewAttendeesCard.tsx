@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-
-interface Attendee {
-  id: string;
-  resolvedName?: string;
-  avatar?: string;
-}
-
-interface ReviewAttendeesCardProps {
-  attendees: Attendee[];
-  onEdit: () => void;
-}
+import type { ReviewAttendeesCardProps } from "../../types";
 
 export function ReviewAttendeesCard({
   attendees,

@@ -1,23 +1,6 @@
 import { create } from "zustand";
-
-export type GameFormat = "single" | "homeAway";
-export type PriorityMethod = "goalDifference" | "faceToFace";
-
-interface NewLeagueState {
-  step: number;
-  leagueName: string;
-  fifaVersion: string;
-  attendees: { id: string; resolvedName?: string; avatar?: string }[];
-  gameFormat: GameFormat;
-  priorityMethod: PriorityMethod;
-  setStep: (step: number) => void;
-  updateFields: (
-    fields: Partial<
-      Omit<NewLeagueState, "setStep" | "updateFields" | "resetStore">
-    >,
-  ) => void;
-  resetStore: () => void;
-}
+import type { GameFormat, PriorityMethod, NewLeagueState } from "../types";
+export type { GameFormat, PriorityMethod };
 
 export const useNewLeagueStore = create<NewLeagueState>((set) => ({
   step: 1,

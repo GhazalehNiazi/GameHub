@@ -1,15 +1,5 @@
 import React from "react";
-
-interface Attendee {
-  id: string;
-  resolvedName?: string;
-  avatar?: string;
-}
-
-interface SettingsTabProps {
-  attendees: Attendee[];
-  onTerminateLeague: () => void;
-}
+import type { SettingsTabProps } from "../types";
 
 export function SettingsTab({
   attendees,

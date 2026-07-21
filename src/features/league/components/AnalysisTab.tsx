@@ -1,28 +1,5 @@
 import React from "react";
-
-interface AnalysisTabProps {
-  data: {
-    hasData: boolean;
-    lastFeaturedMatch?: {
-      homePlayer: string;
-      homeAvatar: string;
-      homeScore: number;
-      awayPlayer: string;
-      awayAvatar: string;
-      awayScore: number;
-    };
-    keyUpdates?: string[];
-    titleRace?: {
-      username: string;
-      avatar: string;
-      probability: string;
-      path: string;
-      historicalEdge?: string;
-      role?: string;
-      mathematicallyEliminated?: string;
-    }[];
-  };
-}
+import type { AnalysisTabProps } from "../types";
 
 export function AnalysisTab({ data }: AnalysisTabProps) {
   /* --- STATE 1: EMPTY STATE CALLOUT (Screenshot 279) --- */

@@ -1,11 +1,5 @@
 import React from "react";
-
-interface GridOptionCardProps {
-  icon: React.ReactNode;
-  title: string;
-  isSelected: boolean;
-  onClick: () => void;
-}
+import type { GridOptionCardProps } from "@/shared/types";
 
 export function GridOptionCard({
   icon,

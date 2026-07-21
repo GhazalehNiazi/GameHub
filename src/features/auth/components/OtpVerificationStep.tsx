@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
-interface OtpVerificationStepProps {
-  otp: string[];
-  onChange: (otp: string[]) => void;
-}
+import type { OtpVerificationStepProps } from "../types";
 
 export function OtpVerificationStep({
   otp,

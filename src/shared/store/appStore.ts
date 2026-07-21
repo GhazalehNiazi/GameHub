@@ -1,10 +1,5 @@
 import { create } from 'zustand'
-
-interface AppState {
-  // Add your global state here
-  theme: 'light' | 'dark'
-  setTheme: (t: 'light' | 'dark') => void
-}
+import type { AppState } from '@/shared/types'
 
 export const useAppStore = create<AppState>((set) => ({
   theme: 'light',

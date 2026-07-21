@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
-import { TabSegmentControl, LeagueTab } from "../components/TabSegmentControl";
+import { TabSegmentControl } from "../components/TabSegmentControl";
 import { FixturesTab } from "../components/FixturesTab";
 import { AnalysisTab } from "../components/AnalysisTab";
 import { SettingsTab } from "../components/SettingsTab"; // Added
 import { ScoreEntryModal } from "../components/ScoreEntryModal";
-import { MatchData } from "../components/FixtureMatchCard";
+import type { LeagueTab, MatchData } from "../types";
 
 const INITIAL_MOCK_ATTENDEES = [
   { id: "1", resolvedName: "Mamrez420", avatar: "🐵" },

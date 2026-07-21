@@ -1,15 +1,5 @@
 import React from "react";
-
-export interface LobbyMember {
-  name: string;
-  avatar: string;
-  isAdmin?: boolean;
-  status: "joined" | "pending";
-}
-
-interface MemberStatusRowProps {
-  member: LobbyMember;
-}
+import type { LobbyMember, MemberStatusRowProps } from "../types";
 
 export function MemberStatusRow({ member }: MemberStatusRowProps) {
   const isJoined = member.status === "joined";

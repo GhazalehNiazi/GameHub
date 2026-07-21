@@ -1,10 +1,7 @@
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useNewLeagueStore } from "../store/newLeagueStore";
-
-interface AttendeesFormInputs {
-  list: { id: string; resolvedName?: string; avatar?: string }[];
-}
+import type { AttendeesFormInputs } from "../types";
 
 export function AttendeesListStep() {
   const { attendees, updateFields, setStep } = useNewLeagueStore();

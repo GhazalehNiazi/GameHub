@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react'
-
-interface BeforeInstallPromptEvent extends Event {
-  prompt: () => Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
-}
+import type { BeforeInstallPromptEvent } from '@/shared/types'
 
 /**
  * Captures the browser's install prompt so you can show a custom "Add to Home Screen" button.

@@ -1,18 +1,4 @@
-export interface MatchData {
-  id: string;
-  matchday: number;
-  homePlayer: string;
-  homeAvatar: string;
-  awayPlayer: string;
-  awayAvatar: string;
-  homeScore: number | null;
-  awayScore: number | null;
-}
-
-interface FixtureMatchCardProps {
-  match: MatchData;
-  onEnterResults: (match: MatchData) => void;
-}
+import type { MatchData, FixtureMatchCardProps } from "../types";
 
 export function FixtureMatchCard({
   match,

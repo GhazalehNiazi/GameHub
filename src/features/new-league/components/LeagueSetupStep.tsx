@@ -3,11 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import { Input } from "@/shared/components/ui/Input";
 import { Select } from "@/shared/components/ui/Select";
-
-interface SetupInputs {
-  leagueName: string;
-  fifaVersion: string;
-}
+import type { SetupInputs } from "../types";
 
 const FIFA_VERSIONS = [
   { value: "fc25", label: "EA Sports FC 25" },

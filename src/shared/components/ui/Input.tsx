@@ -1,8 +1,5 @@
 import React from "react";
-
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-}
+import type { InputProps } from "@/shared/types";
 
 export function Input({ label, id, className = "", ...props }: InputProps) {
   return (
