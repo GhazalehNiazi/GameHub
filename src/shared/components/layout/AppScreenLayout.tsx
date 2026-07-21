@@ -1,4 +1,6 @@
 import { BottomNavBar } from "./BottomNavBar";
+import { OfflineBanner } from "@/shared/components/pwa/OfflineBanner";
+import { InstallBanner } from "@/shared/components/pwa/InstallBanner";
 import { cn } from "@/shared/utils/cn";
 import type { AppScreenLayoutProps } from "@/shared/types";
 
@@ -10,7 +12,10 @@ export function AppScreenLayout({
 }: AppScreenLayoutProps) {
   return (
     // The className prop is placed at the end so your custom overrides take priority
-    <div className='flex flex-col flex-1 h-full w-full overflow-hidden'>
+    <div className='flex flex-col flex-1 h-full w-full overflow-hidden relative'>
+      {/* PWA Offline Banner */}
+      <OfflineBanner />
+
       {/* 1. Internal Independent Scroll Engine Area */}
       <div
         className={cn(
@@ -21,9 +26,12 @@ export function AppScreenLayout({
         {children}
       </div>
 
+      {/* PWA Install Banner */}
+      <InstallBanner />
+
       {/* 2. Rigid Pinned System Bottom Zone */}
       {(stickyFooter || showNavigation) && (
-        <div className='flex-shrink-0 px-6 pb-4 pt-2 bg-white space-y-4'>
+        <div className='flex-shrink-0 px-6 pb-4 pt-2 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800/80 space-y-4'>
           {/* Top operational row for custom task buttons */}
           {stickyFooter && <div>{stickyFooter}</div>}
 

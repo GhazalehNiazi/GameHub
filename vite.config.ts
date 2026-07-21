@@ -19,31 +19,88 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'prompt', // Prompt user to update via main.tsx flow
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
+      registerType: 'prompt', // Prompt user to update via custom toast
+      includeAssets: [
+        'favicon.svg',
+        'favicon-64x64.png',
+        'apple-touch-icon.png',
+        'masked-icon.svg',
+        'pwa-192x192.png',
+        'pwa-512x512.png',
+      ],
       manifest: {
-        name: 'My PWA App',
-        short_name: 'MyApp',
-        description: 'My awesome PWA',
+        id: '/',
+        name: 'GameHub - Esports & Match Tracker',
+        short_name: 'GameHub',
+        description: 'Organize gaming leagues, track matches, score fixtures, and compete offline or online.',
         theme_color: '#ffffff',
-        background_color: '#ffffff',
+        background_color: '#121212',
         display: 'standalone',
+        display_override: ['standalone', 'minimal-ui'],
         orientation: 'portrait',
         scope: '/',
         start_url: '/',
+        categories: ['games', 'sports', 'utilities'],
         icons: [
-          { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-          { 
-            src: 'pwa-512x512.png', 
-            sizes: '512x512', 
-            type: 'image/png', 
-            purpose: 'any maskable' 
+          {
+            src: 'favicon-64x64.png',
+            sizes: '64x64',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: 'pwa-512x512-maskable.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
+        ],
+        shortcuts: [
+          {
+            name: 'New League',
+            short_name: 'New League',
+            description: 'Create a new gaming league or tournament',
+            url: '/play/new-league',
+            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }],
+          },
+          {
+            name: 'Dashboard',
+            short_name: 'Dashboard',
+            description: 'View active leagues and upcoming fixtures',
+            url: '/dashboard',
+            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }],
+          },
+        ],
+        screenshots: [
+          {
+            src: 'screenshot-mobile.png',
+            sizes: '390x844',
+            type: 'image/png',
+            form_factor: 'narrow',
+            label: 'Mobile Dashboard & Fixtures View',
+          },
+          {
+            src: 'screenshot-desktop.png',
+            sizes: '1280x720',
+            type: 'image/png',
+            form_factor: 'wide',
+            label: 'Desktop League Management Overview',
           },
         ],
       },
       workbox: {
-        // Core caching strategy rules matching architectural intent
+        navigateFallback: '/index.html',
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             // API calls — Network first, fall back to offline storage / cache
@@ -51,11 +108,11 @@ export default defineConfig({
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',
-              expiration: { 
-                maxEntries: 100, 
-                maxAgeSeconds: 60 * 60 * 24 // 24 hours
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24, // 24 hours
               },
-              networkTimeoutSeconds: 10,
+              networkTimeoutSeconds: 5,
             },
           },
           {
@@ -64,9 +121,9 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'assets-cache',
-              expiration: { 
-                maxEntries: 200, 
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
               },
             },
           },
@@ -76,16 +133,16 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-cache',
-              expiration: { 
-                maxEntries: 20, 
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
               },
             },
           },
         ],
       },
       devOptions: {
-        enabled: true, // Crucial for locally testing offline behavior in 390px mobile simulation
+        enabled: true,
         type: 'module',
       },
     }),
