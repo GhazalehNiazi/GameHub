@@ -1,12 +1,11 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
-import WelcomePage from "@/pages/onboarding/WelcomePage";
-import LoginPage from "@/pages/auth/LoginPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
-import DashboardPage from "@/pages/dashboard/DashboardPage";
-import PlayPage from "@/pages/play/PlayPage";
-import NewLeagueWizardPage from "@/pages/play-new-league/NewLeagueWizardPage"; // Path Updated cleanly!
-import LeagueDashboardPage from "@/pages/league/LeagueDashboardPage";
+import { WelcomePage } from "@/features/onboarding";
+import { LoginPage, RegisterPage } from "@/features/auth";
+import { DashboardPage } from "@/features/dashboard";
+import { PlayPage } from "@/features/play";
+import { NewLeagueWizardPage } from "@/features/new-league";
+import { LeagueDashboardPage } from "@/features/league";
 
 export default function App() {
   return (
