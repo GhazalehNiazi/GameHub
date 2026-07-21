@@ -1,4 +1,3 @@
-import React from "react";
 import type { StepProgressBarProps } from "../types";
 
 export function StepProgressBar({ currentStep }: StepProgressBarProps) {

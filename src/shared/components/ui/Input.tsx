@@ -1,4 +1,3 @@
-import React from "react";
 import type { InputProps } from "@/shared/types";
 
 export function Input({ label, id, className = "", ...props }: InputProps) {

@@ -1,4 +1,3 @@
-import React from "react";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 
 export default function LeagueLobbyPage() {

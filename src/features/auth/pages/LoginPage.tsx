@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { PhoneFormStep } from "../components/PhoneFormStep";

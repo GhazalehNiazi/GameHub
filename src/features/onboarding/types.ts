@@ -1,7 +1,7 @@
-import type React from "react";
+import type { ReactNode } from "react";
 
 export interface FeatureRowProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description: string;
 }

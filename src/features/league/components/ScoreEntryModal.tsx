@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import type { MatchData, ScoreEntryModalProps } from "../types";
+import { useState } from "react";
+import type { ScoreEntryModalProps } from "../types";
 
 export function ScoreEntryModal({
   match,

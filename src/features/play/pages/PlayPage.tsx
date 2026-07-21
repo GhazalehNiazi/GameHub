@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { usePlayStore } from "../store/playStore";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { ModeSelectionStep } from "../components/ModeSelectionStep";
@@ -15,9 +15,6 @@ export default function PlayPage() {
   const handleBackNavigation = () => {
     if (currentStep === 2) {
       setStep(1);
-    } else {
-      // Native navigation action fallback if on step 1
-      console.log("Already on first step layout boundary");
     }
   };
 

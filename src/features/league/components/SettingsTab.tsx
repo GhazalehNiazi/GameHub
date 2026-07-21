@@ -1,4 +1,3 @@
-import React from "react";
 import type { SettingsTabProps } from "../types";
 
 export function SettingsTab({

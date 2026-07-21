@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import type { AttendeesFormInputs } from "../types";

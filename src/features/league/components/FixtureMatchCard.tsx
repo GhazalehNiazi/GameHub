@@ -1,4 +1,4 @@
-import type { MatchData, FixtureMatchCardProps } from "../types";
+import type { FixtureMatchCardProps } from "../types";
 
 export function FixtureMatchCard({
   match,

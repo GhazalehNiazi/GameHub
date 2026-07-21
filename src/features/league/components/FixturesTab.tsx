@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FixtureMatchCard } from "./FixtureMatchCard";
 import { LeagueOverviewHeader } from "./LeagueOverviewHeader";
-import type { MatchData, FixturesTabProps } from "../types";
+import type { FixturesTabProps } from "../types";
 
 export function FixturesTab({
   matches,

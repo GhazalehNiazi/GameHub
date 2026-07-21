@@ -1,5 +1,4 @@
-import React from "react";
-import type { LobbyMember, MemberStatusRowProps } from "../types";
+import type { MemberStatusRowProps } from "../types";
 
 export function MemberStatusRow({ member }: MemberStatusRowProps) {
   const isJoined = member.status === "joined";

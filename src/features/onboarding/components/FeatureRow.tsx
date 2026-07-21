@@ -1,4 +1,3 @@
-import React from "react";
 import type { FeatureRowProps } from "../types";
 
 export function FeatureRow({ icon, title, description }: FeatureRowProps) {

@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { WelcomePage } from "@/features/onboarding";
 import { LoginPage, RegisterPage } from "@/features/auth";

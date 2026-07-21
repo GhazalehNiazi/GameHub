@@ -1,4 +1,3 @@
-import React from "react";
 import type { GridOptionCardProps } from "@/shared/types";
 
 export function GridOptionCard({

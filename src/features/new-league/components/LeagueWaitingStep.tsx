@@ -1,4 +1,3 @@
-import React from "react";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import type { LeagueWaitingStepProps } from "../types";
 

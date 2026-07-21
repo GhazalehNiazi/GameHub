@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useRegisterStore } from "../store/registerStore";
 import { Input } from "@/shared/components/ui/Input";

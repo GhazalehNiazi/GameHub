@@ -1,4 +1,4 @@
-import type React from "react";
+import type { ReactNode, InputHTMLAttributes, SelectHTMLAttributes } from "react";
 import type { DBSchema } from "idb";
 
 /** Global Domain Types */
@@ -10,9 +10,9 @@ export interface Attendee {
 
 /** Global / Shared Layout Component Props */
 export interface AppScreenLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   /** Main operational task execution actions (buttons) loaded above navigation bars */
-  stickyFooter?: React.ReactNode;
+  stickyFooter?: ReactNode;
   /** Toggle visibility of standard core shell tab systems */
   showNavigation?: boolean;
   /** Custom utility classes to append or overwrite the root layout container styles */
@@ -20,8 +20,8 @@ export interface AppScreenLayoutProps {
 }
 
 export interface OnboardingLayoutProps {
-  children: React.ReactNode;
-  footerButton: React.ReactNode;
+  children: ReactNode;
+  footerButton: ReactNode;
 }
 
 /** Global / Shared PWA Component Props & Events */
@@ -37,13 +37,13 @@ export interface BeforeInstallPromptEvent extends Event {
 
 /** Global / Shared UI Component Props */
 export interface GridOptionCardProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
@@ -52,7 +52,7 @@ export interface SelectOption {
   label: string;
 }
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   subLabel?: string;
   placeholder?: string;
@@ -60,7 +60,7 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 }
 
 export interface SelectableCardProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description?: string;
   onClick: () => void;

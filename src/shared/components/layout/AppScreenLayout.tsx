@@ -1,4 +1,3 @@
-import React from "react";
 import { BottomNavBar } from "./BottomNavBar";
 import { cn } from "@/shared/utils/cn";
 import type { AppScreenLayoutProps } from "@/shared/types";

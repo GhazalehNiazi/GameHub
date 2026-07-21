@@ -1,4 +1,3 @@
-import React from "react";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import { ReviewBasicsCard } from "./review/ReviewBasicsCard";
 import { ReviewAttendeesCard } from "./review/ReviewAttendeesCard";

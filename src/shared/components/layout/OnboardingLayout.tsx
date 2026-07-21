@@ -1,4 +1,3 @@
-import React from "react";
 import type { OnboardingLayoutProps } from "@/shared/types";
 
 export function OnboardingLayout({

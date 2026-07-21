@@ -1,4 +1,3 @@
-import React from "react";
 import { usePlayStore } from "../store/playStore";
 import type { PlayMode } from "../types";
 import { SelectableCard } from "@/shared/components/ui/SelectableCard";
@@ -10,9 +9,6 @@ export function ModeSelectionStep() {
     setMode(mode);
     if (mode === "league") {
       setStep(2); // Proceed immediately to League Branch
-    } else {
-      // Placeholder warning rule or logic when UI teams deliver 1v1 / Tournament designs
-      console.log(`Selected ${mode}. Step 2 views for this mode are pending.`);
     }
   };
 

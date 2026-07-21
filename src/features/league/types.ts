@@ -1,4 +1,3 @@
-import type React from "react";
 import type { Attendee } from "@/shared/types";
 
 export type LeagueTab = "fixtures" | "table" | "analysis" | "settings";

@@ -1,4 +1,3 @@
-import React from "react";
 import type { SelectProps } from "@/shared/types";
 
 export function Select({

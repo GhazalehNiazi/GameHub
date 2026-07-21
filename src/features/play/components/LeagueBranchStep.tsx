@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router";
 import { SelectableCard } from "@/shared/components/ui/SelectableCard";
 
@@ -24,7 +23,7 @@ export function LeagueBranchStep() {
           icon='🔄'
           title='Repeat the least played league'
           description='You can repeat the last league with the same teams and rules.'
-          onClick={() => console.log("Repeat flow pending.")}
+          onClick={() => {}}
           disabled
         />
       </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import type { LeagueTab, TabSegmentControlProps } from "../types";
 
 export function TabSegmentControl({

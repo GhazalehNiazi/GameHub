@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { FeatureRow } from "../components/FeatureRow";

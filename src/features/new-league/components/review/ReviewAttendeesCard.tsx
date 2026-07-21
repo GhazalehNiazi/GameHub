@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { ReviewAttendeesCardProps } from "../../types";
 
 export function ReviewAttendeesCard({

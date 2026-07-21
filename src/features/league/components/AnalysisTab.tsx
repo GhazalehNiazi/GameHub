@@ -1,4 +1,3 @@
-import React from "react";
 import type { AnalysisTabProps } from "../types";
 
 export function AnalysisTab({ data }: AnalysisTabProps) {

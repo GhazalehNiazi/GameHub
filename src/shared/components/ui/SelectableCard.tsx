@@ -1,4 +1,3 @@
-import React from "react";
 import type { SelectableCardProps } from "@/shared/types";
 
 export function SelectableCard({

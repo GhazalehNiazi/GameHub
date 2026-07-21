@@ -1,4 +1,3 @@
-import React from "react";
 import type { ReviewBasicsCardProps } from "../../types";
 
 export function ReviewBasicsCard({
