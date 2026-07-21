@@ -1,58 +1,47 @@
-# PWA Base
+# React + TypeScript + Vite
 
-Mobile-first PWA scaffold — Vite + React + TypeScript + Tailwind + vite-plugin-pwa.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Stack
+## Getting Started
 
-| Layer | Package |
-|---|---|
-| Build | Vite 5 |
-| UI | React 18 + TypeScript |
-| Styling | Tailwind CSS |
-| Routing | React Router 6 |
-| State | Zustand |
-| Offline DB | idb (IndexedDB) |
-| PWA | vite-plugin-pwa + Workbox |
+### Prerequisites
 
-## Quick start
+Make sure you have Node.js installed on your system.
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
 
 ```bash
 npm install
-npm run dev
 ```
 
-## Key concepts
+### Available Scripts
 
-### Mobile frame layout
-`index.css` caps the app to 390 px wide (your Figma frame) on desktop with a
-decorative background visible on the sides. On real mobile (<430 px) the frame
-fills the screen edge-to-edge automatically.
+In the project directory, you can run:
 
-Change `--app-max-width` in `:root` to match your Figma artboard width.
-Change `--desktop-bg` to set the side-panel color/pattern.
+#### `npm run dev`
 
-### Offline support
-- `src/lib/db.ts` — IndexedDB via `idb`; define your stores here
-- `src/hooks/useNetworkStatus.ts` — detect online/offline
-- Workbox strategies in `vite.config.ts` — API: NetworkFirst, assets: CacheFirst
+Runs the app in development mode using Vite.<br />
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-### Install prompt
-`src/hooks/useInstallPrompt.ts` captures `beforeinstallprompt` so you can show
-a custom "Add to Home Screen" button anywhere in your UI.
+#### `npm run build`
 
-### Service worker updates
-`main.tsx` uses `registerSW({ onNeedRefresh })` — shows a confirm dialog when a
-new SW is ready. Replace with a toast or banner component to match your design.
+Builds the app for production to the `dist` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Adding a new page
+#### `npm run preview`
 
-1. Create `src/pages/MyPage.tsx`
-2. Add a `<Route>` in `App.tsx`
-3. Use `<main className="page-content safe-top safe-bottom">` as the root
+Locally preview the production build.
 
-## Figma → code workflow
+#### `npm run lint`
 
-- Mirror Figma colour styles into `tailwind.config.js` under `theme.extend.colors`
-- Mirror spacing/font tokens into `tailwind.config.js` accordingly
-- Use `--app-max-width` CSS variable if the artboard size changes
-# GameHub
+Runs ESLint to check for code quality and style issues.
+
+## Official Plugins
+
+Currently, two official plugins are available for React in Vite:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
