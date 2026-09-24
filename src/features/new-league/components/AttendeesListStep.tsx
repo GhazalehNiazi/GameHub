@@ -15,6 +15,7 @@ export function AttendeesListStep() {
     handleSubmit,
     setValue,
     watch,
+    clearErrors,
     formState: { errors },
   } = useForm<AttendeesFormValues>({
     resolver: zodResolver(attendeesSchema),
@@ -28,12 +29,56 @@ export function AttendeesListStep() {
 
   const currentList = watch("list");
 
-  // Calculate if we have at least 3 successfully resolved and added attendees
-  const resolvedCount = currentList.filter((item) => item.resolvedName).length;
+  const listError =
+    errors.list?.root?.message ||
+    (errors.list as { message?: string } | undefined)?.message;
+
+  const resolveAttendeeAtIndex = (index: number) => {
+    const enteredId = currentList[index]?.id?.trim();
+    if (!enteredId) return;
+
+    if (enteredId.toLowerCase().includes("leftie")) {
+      setValue(`list.${index}.resolvedName`, "Ilialeftie", {
+        shouldValidate: true,
+      });
+      setValue(`list.${index}.avatar`, "🦥");
+    } else {
+      setValue(`list.${index}.resolvedName`, enteredId, {
+        shouldValidate: true,
+      });
+      setValue(`list.${index}.avatar`, "👤");
+    }
+    clearErrors("list");
+  };
+
+  const handleAddClick = (index: number) => {
+    resolveAttendeeAtIndex(index);
+  };
 
   const onSubmit = (data: AttendeesFormValues) => {
-    updateFields({ attendees: data.list });
+    const validAttendees = data.list.filter((item) => item.resolvedName?.trim());
+    updateFields({
+      attendees: validAttendees.length >= 3 ? validAttendees : data.list,
+    });
     setStep(3);
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Auto-resolve any inputs where the user entered an ID but did not explicitly click the "Add" button
+    currentList.forEach((item, index) => {
+      const enteredId = item?.id?.trim();
+      if (enteredId && !item.resolvedName) {
+        if (enteredId.toLowerCase().includes("leftie")) {
+          setValue(`list.${index}.resolvedName`, "Ilialeftie");
+          setValue(`list.${index}.avatar`, "🦥");
+        } else {
+          setValue(`list.${index}.resolvedName`, enteredId);
+          setValue(`list.${index}.avatar`, "👤");
+        }
+      }
+    });
+
+    handleSubmit(onSubmit)(e);
   };
 
   // Intercept the removal action to maintain the strict 3-slot floor boundary
@@ -49,23 +94,10 @@ export function AttendeesListStep() {
     }
   };
 
-  const handleAddClick = (index: number) => {
-    const enteredId = currentList[index]?.id?.trim();
-    if (!enteredId) return;
-
-    if (enteredId.toLowerCase().includes("leftie")) {
-      setValue(`list.${index}.resolvedName`, "Ilialeftie");
-      setValue(`list.${index}.avatar`, "🦥");
-    } else {
-      setValue(`list.${index}.resolvedName`, enteredId);
-      setValue(`list.${index}.avatar`, "👤");
-    }
-  };
-
   return (
     <form
       id='new-league-form-2'
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleFormSubmit}
       className='space-y-5 animate-fade-in text-left'
     >
       {/* Informational Header Section */}
@@ -80,9 +112,9 @@ export function AttendeesListStep() {
             them easier here. For now, search your friend's IDs and add them
           </p>
         </div>
-        {errors.list?.message && (
+        {listError && (
           <p className='text-[11px] text-danger font-medium pl-1 pt-1'>
-            {errors.list.message}
+            {listError}
           </p>
         )}
       </div>
@@ -147,6 +179,12 @@ export function AttendeesListStep() {
                 <input
                   placeholder='ID'
                   {...register(`list.${index}.id` as const)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleAddClick(index);
+                    }
+                  }}
                   className='w-full pl-4 pr-20 py-3 bg-surface-subtle border border-edge rounded-xl text-sm text-content placeholder:text-content-subtle focus:outline-none focus:border-brand focus:bg-surface transition-all'
                 />
 
@@ -173,8 +211,6 @@ export function AttendeesListStep() {
       >
         <span className='text-sm'>＋</span> Add more members
       </button>
-
-      <input type='submit' className='hidden' disabled={isContinueDisabled} />
     </form>
   );
 }
