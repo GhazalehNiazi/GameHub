@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router";
-import { useRegisterStore } from "../store/registerStore";
 import { Input } from "@/shared/components/ui/Input";
-import { useRegisterUser } from "@/services/hooks";
 import { passwordSchema, type PasswordFormValues } from "../schemas/authSchemas";
+import type { SecurityPasswordStepProps } from "../types";
 
-export function SecurityPasswordStep() {
-  const navigate = useNavigate();
-  const store = useRegisterStore();
-  const [showPass, setShowPass] = useState(false);
-  const registerMutation = useRegisterUser();
-
+export function SecurityPasswordStep({
+  onSubmit,
+  disabled = false,
+}: SecurityPasswordStepProps) {
   const {
     register,
     handleSubmit,
@@ -20,42 +16,22 @@ export function SecurityPasswordStep() {
     formState: { errors },
   } = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
+    mode: "onBlur",
     defaultValues: { password: "", confirmPassword: "" },
   });
 
+  const [showPass, setShowPass] = useState(false);
   const passwordVal = watch("password", "");
+
   const hasMinLength = passwordVal.length >= 8;
   const hasNumAndAlpha = /[A-Za-z]/.test(passwordVal) && /\d/.test(passwordVal);
 
-  const onSubmit = (data: PasswordFormValues) => {
-    registerMutation.mutate(
-      {
-        name: store.name || "User",
-        username: store.username || "user123",
-        avatar: store.avatar || "🐵",
-        game: store.game || "FIFA 24",
-        password: data.password,
-      },
-      {
-        onSuccess: () => {
-          store.resetStore();
-          navigate("/dashboard");
-        },
-      }
-    );
-  };
-
   return (
     <form
-      id='step-form-3'
+      id='password-form'
       onSubmit={handleSubmit(onSubmit)}
       className='space-y-4 animate-fade-in text-left'
     >
-      {registerMutation.error && (
-        <div className='p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center'>
-          {registerMutation.error.message}
-        </div>
-      )}
       <p className='text-xs text-zinc-500'>
         Set a password for your account to sign up.
       </p>
@@ -64,6 +40,8 @@ export function SecurityPasswordStep() {
         <Input
           placeholder='Password'
           type={showPass ? "text" : "password"}
+          disabled={disabled}
+          autoFocus
           {...register("password")}
           error={errors.password?.message}
         />
@@ -71,6 +49,7 @@ export function SecurityPasswordStep() {
         <Input
           placeholder='Password Confirmation'
           type={showPass ? "text" : "password"}
+          disabled={disabled}
           {...register("confirmPassword")}
           error={errors.confirmPassword?.message}
         />
@@ -80,6 +59,7 @@ export function SecurityPasswordStep() {
         <input
           type='checkbox'
           checked={showPass}
+          disabled={disabled}
           onChange={() => setShowPass(!showPass)}
           className='rounded text-teal-600 w-4 h-4'
         />
@@ -97,6 +77,8 @@ export function SecurityPasswordStep() {
           {hasNumAndAlpha ? "✓" : "•"} Must contain letters and numbers
         </p>
       </div>
+
+      <button type='submit' className='hidden' aria-hidden='true' tabIndex={-1} />
     </form>
   );
 }

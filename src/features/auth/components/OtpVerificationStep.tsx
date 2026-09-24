@@ -1,25 +1,48 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { otpSchema, type OtpFormValues } from "../schemas/authSchemas";
 import type { OtpVerificationStepProps } from "../types";
+import { useOtpTimer } from "../hooks/useOtpTimer";
 
 const DEFAULT_TIMER_SECONDS = 120; // 02:00 minutes
 
 export function OtpVerificationStep({
-  otp,
-  onChange,
-  onBlur,
+  phone,
+  onSubmit,
   onResendOtp,
   isResending = false,
   disabled = false,
-  error,
-  phone,
+  timeLeft: externalTimeLeft,
+  formattedTime: externalFormattedTime,
+  resendSuccessMessage,
   initialTimerSeconds = DEFAULT_TIMER_SECONDS,
 }: OtpVerificationStepProps) {
-  const [targetTime, setTargetTime] = useState<number>(() => Date.now() + initialTimerSeconds * 1000);
-  const [timeLeft, setTimeLeft] = useState<number>(initialTimerSeconds);
-  const [resendSuccess, setResendSuccess] = useState<string | null>(null);
+  const internalTimer = useOtpTimer(initialTimerSeconds);
+  const timeLeft =
+    externalTimeLeft !== undefined ? externalTimeLeft : internalTimer.timeLeft;
+  const formattedTime =
+    externalFormattedTime !== undefined
+      ? externalFormattedTime
+      : internalTimer.formattedTime;
 
+  const [localResendSuccess, setLocalResendSuccess] = useState<string | null>(null);
   const otpRefs = useRef<HTMLInputElement[]>([]);
   const isAutoAdvancing = useRef(false);
+
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<OtpFormValues>({
+    resolver: zodResolver(otpSchema),
+    defaultValues: { otp: Array(5).fill("") },
+  });
+
+  const otp = watch("otp");
+  const displaySuccessMessage = resendSuccessMessage || localResendSuccess;
 
   // Auto-focus first empty input on mount
   useEffect(() => {
@@ -31,63 +54,37 @@ export function OtpVerificationStep({
     return () => clearTimeout(timerId);
   }, []);
 
-  // Real-time drift protected countdown
+  // Clear local resend success banner after 4 seconds
   useEffect(() => {
-    if (timeLeft <= 0) return;
-
-    const interval = setInterval(() => {
-      const remaining = Math.max(0, Math.ceil((targetTime - Date.now()) / 1000));
-      setTimeLeft(remaining);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetTime, timeLeft]);
-
-  // Clear resend success alert after 4 seconds
-  useEffect(() => {
-    if (!resendSuccess) return;
-    const t = setTimeout(() => setResendSuccess(null), 4000);
+    if (!localResendSuccess) return;
+    const t = setTimeout(() => setLocalResendSuccess(null), 4000);
     return () => clearTimeout(t);
-  }, [resendSuccess]);
-
-  const resetTimer = () => {
-    const newTarget = Date.now() + initialTimerSeconds * 1000;
-    setTargetTime(newTarget);
-    setTimeLeft(initialTimerSeconds);
-  };
+  }, [localResendSuccess]);
 
   const handleResend = async () => {
     if (isResending || timeLeft > 0 || !onResendOtp) return;
 
     try {
       await onResendOtp();
-      resetTimer();
-      setResendSuccess("A new code has been texted to your number.");
-      // Clear OTP inputs and focus the first box
-      onChange(Array(5).fill(""));
+      internalTimer.resetTimer();
+      setLocalResendSuccess("A new code has been texted to your number.");
+      reset({ otp: Array(5).fill("") });
       setTimeout(() => {
         otpRefs.current[0]?.focus();
       }, 50);
     } catch {
-      // Error handled by parent component error state
+      // Handled by parent
     }
   };
 
-  const formatTimer = () => {
-    const mins = Math.floor(timeLeft / 60);
-    const secs = timeLeft % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
-
   const handleOtpChange = (value: string, index: number) => {
-    // Only accept numeric digits
     const clean = value.replace(/\D/g, "");
     if (!clean && value !== "") return;
 
     const char = clean.slice(-1);
     const newOtp = [...otp];
     newOtp[index] = char;
-    onChange(newOtp);
+    setValue("otp", newOtp, { shouldValidate: true });
 
     if (char && index < 4) {
       isAutoAdvancing.current = true;
@@ -102,12 +99,18 @@ export function OtpVerificationStep({
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number,
   ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(onSubmit)();
+      return;
+    }
+
     if (e.key === "Backspace") {
       if (!otp[index] && index > 0) {
         isAutoAdvancing.current = true;
         const newOtp = [...otp];
         newOtp[index - 1] = "";
-        onChange(newOtp);
+        setValue("otp", newOtp);
         otpRefs.current[index - 1]?.focus();
         setTimeout(() => {
           isAutoAdvancing.current = false;
@@ -115,7 +118,7 @@ export function OtpVerificationStep({
       } else if (otp[index]) {
         const newOtp = [...otp];
         newOtp[index] = "";
-        onChange(newOtp);
+        setValue("otp", newOtp);
       }
     } else if (e.key === "ArrowLeft" && index > 0) {
       e.preventDefault();
@@ -136,36 +139,29 @@ export function OtpVerificationStep({
     digits.forEach((digit, i) => {
       newOtp[i] = digit;
     });
-    onChange(newOtp);
+    setValue("otp", newOtp, { shouldValidate: true });
 
     const nextIndex = Math.min(digits.length, 4);
     otpRefs.current[nextIndex]?.focus();
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    if (isAutoAdvancing.current) return;
-    if (e.currentTarget.contains(e.relatedTarget as Node)) {
-      return;
-    }
-    onBlur?.();
-  };
-
   return (
-    <div className='space-y-5 animate-fade-in text-center w-full'>
+    <form
+      id='login-otp-form'
+      onSubmit={handleSubmit(onSubmit)}
+      className='space-y-5 animate-fade-in text-center w-full'
+    >
       <p className='text-xs text-[#212121] text-left leading-relaxed'>
         A 5 number code has been texted to {phone ? <span className='font-medium text-zinc-900'>{phone}</span> : "your number"}, please enter it below
       </p>
 
-      {resendSuccess && (
+      {displaySuccessMessage && (
         <div className='p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-700 text-center animate-fade-in'>
-          {resendSuccess}
+          {displaySuccessMessage}
         </div>
       )}
 
-      <div
-        className='flex justify-center gap-2 w-full'
-        onBlur={handleBlur}
-      >
+      <div className='flex justify-center gap-2 w-full'>
         {otp.map((digit, idx) => (
           <input
             key={idx}
@@ -184,18 +180,22 @@ export function OtpVerificationStep({
             onKeyDown={(e) => handleOtpKeyDown(e, idx)}
             onPaste={handlePaste}
             className={`flex-1 max-w-[58px] min-w-0 h-14 bg-white border ${
-              error ? "border-red-500" : "border-[#E0E0E0]"
+              errors.otp ? "border-red-500" : "border-[#E0E0E0]"
             } text-zinc-900 text-lg font-bold rounded-xl text-center focus:outline-none focus:border-zinc-900 transition-colors disabled:opacity-50 disabled:bg-zinc-50`}
           />
         ))}
       </div>
 
-      {error && <p className='text-[10px] text-red-500 text-center'>{error}</p>}
+      {errors.otp && (
+        <p className='text-[10px] text-red-500 text-center'>
+          {errors.otp.message}
+        </p>
+      )}
 
       {timeLeft > 0 ? (
         <div className='flex items-center justify-center gap-5 text-xs text-zinc-800 px-1 pt-1'>
           <span>Code Accountability</span>
-          <span className='font-mono font-medium'>{formatTimer()}</span>
+          <span className='font-mono font-medium'>{formattedTime}</span>
         </div>
       ) : (
         <div className='flex items-center justify-center px-1 pt-1'>
@@ -216,6 +216,8 @@ export function OtpVerificationStep({
           </button>
         </div>
       )}
-    </div>
+
+      <button type='submit' className='hidden' aria-hidden='true' tabIndex={-1} />
+    </form>
   );
 }

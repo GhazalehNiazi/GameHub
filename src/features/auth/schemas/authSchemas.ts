@@ -65,3 +65,34 @@ export const passwordSchema = z
   });
 
 export type PasswordFormValues = z.infer<typeof passwordSchema>;
+
+/** Complete Multi-Step Registration Schema */
+export const registerSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, "Name is required")
+      .min(2, "Name must be at least 2 characters"),
+    username: z
+      .string()
+      .min(1, "Username is required")
+      .min(3, "Username must be at least 3 characters")
+      .regex(/^[a-zA-Z0-9_]+$/, "Alphanumeric and underscores only"),
+    avatar: z.string().min(1, "Avatar is required"),
+    game: z.string().min(1, "Please select a game title"),
+    password: z
+      .string()
+      .min(1, "Password is required")
+      .min(8, "Must be at least 8 characters")
+      .refine(
+        (val) => /[A-Za-z]/.test(val) && /\d/.test(val),
+        "Must contain both letters and numbers"
+      ),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type RegisterFormValues = z.infer<typeof registerSchema>;

@@ -1,3 +1,50 @@
+import type {
+  PhoneFormValues,
+  OtpFormValues,
+  ProfileFormValues,
+  GameFormValues,
+  PasswordFormValues,
+} from "./schemas/authSchemas";
+
+export interface StepProgressBarProps {
+  currentStep: 1 | 2 | 3;
+}
+
+export interface PhoneFormStepProps {
+  initialPhone?: string;
+  onSubmit: (data: PhoneFormValues) => void;
+  disabled?: boolean;
+}
+
+export interface OtpVerificationStepProps {
+  phone?: string;
+  onSubmit: (data: OtpFormValues) => void;
+  onResendOtp?: () => void | Promise<void>;
+  isResending?: boolean;
+  disabled?: boolean;
+  timeLeft?: number;
+  formattedTime?: string;
+  resendSuccessMessage?: string | null;
+  initialTimerSeconds?: number;
+}
+
+export interface ProfileDetailsStepProps {
+  initialValues?: Partial<ProfileFormValues>;
+  onSubmit: (data: ProfileFormValues) => void;
+  disabled?: boolean;
+}
+
+export interface GameSelectionStepProps {
+  initialGame?: string;
+  onSubmit: (data: GameFormValues) => void;
+  disabled?: boolean;
+}
+
+export interface SecurityPasswordStepProps {
+  onSubmit: (data: PasswordFormValues) => void;
+  disabled?: boolean;
+}
+
 export interface RegisterState {
   step: 1 | 2 | 3;
   name: string;
@@ -11,37 +58,4 @@ export interface RegisterState {
     >,
   ) => void;
   resetStore: () => void;
-}
-
-export interface StepProgressBarProps {
-  currentStep: 1 | 2 | 3;
-}
-
-export interface PhoneFormStepProps {
-  phone?: string;
-  onChange?: (value: string) => void;
-  prefix?: string;
-  error?: string;
-}
-
-export interface OtpVerificationStepProps {
-  otp: string[];
-  onChange: (otp: string[]) => void;
-  onBlur?: () => void;
-  onResendOtp?: () => Promise<void> | void;
-  isResending?: boolean;
-  disabled?: boolean;
-  error?: string;
-  phone?: string;
-  initialTimerSeconds?: number;
-}
-
-export interface ProfileFormInputs {
-  name: string;
-  username: string;
-}
-
-export interface SecurityPasswordInputs {
-  password: "";
-  confirmPassword: "";
 }
