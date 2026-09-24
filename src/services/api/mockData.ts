@@ -2,7 +2,6 @@ import type { AuthUser, LeagueItem } from "./types";
 import type { Attendee } from "@/shared/types";
 
 const MOCK_STORAGE_KEY_LEAGUES = "mock_api_leagues";
-const MOCK_STORAGE_KEY_USERS = "mock_api_users";
 const MOCK_STORAGE_KEY_FRIENDS = "mock_api_friends";
 
 export const INITIAL_MOCK_USER: AuthUser = {

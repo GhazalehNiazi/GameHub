@@ -19,7 +19,7 @@ export function ScoreEntryModal({
     watch,
     formState: { errors },
   } = useForm<ScoreEntryFormValues>({
-    resolver: zodResolver(scoreEntrySchema),
+    resolver: zodResolver(scoreEntrySchema) as any,
     defaultValues: { homeScore: 0, awayScore: 0 },
   });
 

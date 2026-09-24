@@ -3,9 +3,12 @@ import { useNavigate, useParams } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { TabSegmentControl } from "../components/TabSegmentControl";
 import { FixturesTab } from "../components/FixturesTab";
+import { TableTab } from "../components/TableTab";
 import { AnalysisTab } from "../components/AnalysisTab";
 import { SettingsTab } from "../components/SettingsTab";
 import { ScoreEntryModal } from "../components/ScoreEntryModal";
+import { BellIcon } from "@/shared/components/icons/LeagueIcons";
+import { Avatar } from "@/shared/components/ui/Avatar";
 import {
   useLeagueDetail,
   useUpdateMatchScore,
@@ -58,43 +61,51 @@ export default function LeagueDashboardPage() {
   return (
     <main className='page-content safe-top safe-bottom bg-surface relative'>
       <AppScreenLayout showNavigation>
-        {/* Header Block */}
-        <div className='flex items-center justify-between w-full border-b border-edge-subtle pb-3 mb-4'>
+        {/* Top Header Row with Back Button, Avatar and Bell (Mockup Header) */}
+        <div className='flex items-center justify-between w-full pt-1 pb-1'>
           <button
+            type='button'
             onClick={() => navigate("/play")}
-            className='p-1 -ml-1 text-content-secondary hover:text-content cursor-pointer'
+            className='p-1 -ml-1 text-content hover:opacity-75 active:scale-90 transition-transform cursor-pointer'
           >
             <svg
               className='w-5 h-5'
               fill='none'
               stroke='currentColor'
-              strokeWidth='2.5'
+              strokeWidth='2'
               viewBox='0 0 24 24'
             >
               <path
                 strokeLinecap='round'
                 strokeLinejoin='round'
-                d='M15.75 19.5L8.25 12l7.5-7.5'
+                d='M15 19l-7-7 7-7'
               />
             </svg>
           </button>
-          <h1 className='text-base font-bold text-content tracking-tight'>
-            {leagueData?.name || "League Dashboard"}
-          </h1>
-          <div className='w-8 h-8 rounded-full bg-brand-subtle flex items-center justify-center text-base border border-edge'>
-            🐵
+
+          <div className='flex items-center gap-2'>
+            <Avatar name='monster' avatar='monster' size='sm' />
+            <div className='w-7 h-7 rounded-full border border-edge flex items-center justify-center text-content-secondary hover:text-content hover:border-edge-strong transition-colors cursor-pointer'>
+              <BellIcon className='w-3.5 h-3.5' />
+            </div>
           </div>
         </div>
 
+        {/* Centered League Title */}
+        <h1 className='text-xl font-bold text-center text-content my-3 tracking-tight'>
+          {leagueData?.name || "Name of the league"}
+        </h1>
+
+        {/* Segment Tabs Control */}
         <TabSegmentControl activeTab={activeTab} onTabChange={setActiveTab} />
 
-        {/* Loading Indicator or Content */}
+        {/* Content */}
         {isLoading ? (
           <div className='flex justify-center items-center py-16 text-content-subtle text-xs animate-pulse'>
             Loading league data...
           </div>
         ) : (
-          <div className='mt-5'>
+          <div className='mt-4'>
             {activeTab === "fixtures" && (
               <FixturesTab
                 matches={leagueData?.fixtures || []}
@@ -102,6 +113,7 @@ export default function LeagueDashboardPage() {
                 overviewData={leagueData?.overviewData}
               />
             )}
+            {activeTab === "table" && <TableTab />}
             {activeTab === "analysis" && (
               <AnalysisTab data={leagueData?.analysisData || { hasData: false }} />
             )}
@@ -110,11 +122,6 @@ export default function LeagueDashboardPage() {
                 attendees={leagueData?.attendees || []}
                 onTerminateLeague={handleTerminateAction}
               />
-            )}
-            {activeTab === "table" && (
-              <div className='text-xs text-content-subtle text-center py-8'>
-                Table coming soon...
-              </div>
             )}
           </div>
         )}

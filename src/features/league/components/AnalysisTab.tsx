@@ -1,14 +1,15 @@
 import type { AnalysisTabProps } from "../types";
+import { Avatar } from "@/shared/components/ui/Avatar";
 
 export function AnalysisTab({ data }: AnalysisTabProps) {
-  /* --- STATE 1: EMPTY STATE CALLOUT (Screenshot 279) --- */
+  /* --- STATE 1: EMPTY STATE CALLOUT (Android Large - 260) --- */
   if (!data || !data.hasData) {
     return (
-      <div className='flex items-start gap-4 p-5 bg-surface-subtle border border-edge-subtle rounded-3xl text-left animate-fade-in mt-2'>
-        <span className='text-content-secondary text-xl mt-0.5 bg-surface-muted w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0'>
-          ℹ️
-        </span>
-        <p className='text-xs text-content-secondary leading-relaxed font-medium'>
+      <div className='flex items-start gap-3.5 pt-6 px-1 text-left animate-fade-in'>
+        <div className='w-6 h-6 rounded-full bg-[#27272a] text-white flex items-center justify-center font-serif text-xs font-bold shrink-0 mt-0.5 shadow-2xs'>
+          i
+        </div>
+        <p className='text-xs text-content-secondary leading-relaxed font-normal'>
           As you play games in the league, we provide you with analysis of the
           league. Key updates highlight the important changes and Title race
           analysis will predict the winner based on the player's form and
@@ -18,22 +19,26 @@ export function AnalysisTab({ data }: AnalysisTabProps) {
     );
   }
 
-  /* --- STATE 2: API DATA LIVE DASHBOARD (Screenshot 280) --- */
+  /* --- STATE 2: POPULATED DASHBOARD (Android Large - 261) --- */
   return (
-    <div className='space-y-6 animate-fade-in text-left pb-4'>
+    <div className='space-y-6 animate-fade-in text-left pb-6'>
       {/* 1. KEY UPDATES SEGMENT */}
       <div className='space-y-3.5'>
-        <h3 className='text-xs font-bold text-content tracking-tight flex items-center gap-1.5'>
-          ✓ Key Updates
+        <h3 className='text-sm font-bold text-content tracking-tight'>
+          Key Updates
         </h3>
 
-        {/* Latest Featured Match Scorecard */}
+        {/* Featured Match Card */}
         {data.lastFeaturedMatch && (
-          <div className='p-4 bg-surface-subtle border border-edge-subtle rounded-2xl flex items-center justify-between text-xs font-bold text-content'>
+          <div className='p-4 bg-surface border border-edge rounded-2xl flex items-center justify-between text-xs shadow-2xs'>
             <div className='space-y-3'>
               <div className='flex items-center gap-2.5'>
-                <span>{data.lastFeaturedMatch.homeAvatar}</span>
-                <span>
+                <Avatar
+                  name={data.lastFeaturedMatch.homePlayer}
+                  avatar={data.lastFeaturedMatch.homeAvatar}
+                  size='xs'
+                />
+                <span className='font-medium text-content'>
                   {data.lastFeaturedMatch.homePlayer}{" "}
                   <span className='text-[10px] text-content-subtle font-normal'>
                     (Home)
@@ -41,8 +46,12 @@ export function AnalysisTab({ data }: AnalysisTabProps) {
                 </span>
               </div>
               <div className='flex items-center gap-2.5'>
-                <span>{data.lastFeaturedMatch.awayAvatar}</span>
-                <span>
+                <Avatar
+                  name={data.lastFeaturedMatch.awayPlayer}
+                  avatar={data.lastFeaturedMatch.awayAvatar}
+                  size='xs'
+                />
+                <span className='font-medium text-content'>
                   {data.lastFeaturedMatch.awayPlayer}{" "}
                   <span className='text-[10px] text-content-subtle font-normal'>
                     (Away)
@@ -50,23 +59,36 @@ export function AnalysisTab({ data }: AnalysisTabProps) {
                 </span>
               </div>
             </div>
-            <div className='space-y-3 font-black text-right pr-1'>
+
+            <div className='space-y-3 font-bold text-right pr-2 text-content'>
               <div>{data.lastFeaturedMatch.homeScore}</div>
               <div>{data.lastFeaturedMatch.awayScore}</div>
             </div>
           </div>
         )}
 
-        {/* Dynamic Bullet Points List */}
-        <div className='space-y-3 pl-1'>
+        {/* Dynamic Bullet Points with Network / Branch Icon */}
+        <div className='space-y-3 pl-0.5 pt-1'>
           {data.keyUpdates?.map((update, idx) => (
             <div
               key={idx}
-              className='flex items-start gap-2.5 text-[11px] text-content-muted font-medium leading-relaxed'
+              className='flex items-start gap-2.5 text-xs text-content-muted leading-relaxed'
             >
-              <span className='text-content-subtle text-xs mt-0.5 flex-shrink-0'>
-                ⛓
-              </span>
+              <svg
+                className='w-3.5 h-3.5 text-content-subtle shrink-0 mt-0.5'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.75'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <circle cx='18' cy='5' r='3' />
+                <circle cx='6' cy='12' r='3' />
+                <circle cx='18' cy='19' r='3' />
+                <line x1='8.59' y1='13.51' x2='15.42' y2='17.49' />
+                <line x1='15.41' y1='6.51' x2='8.59' y2='10.49' />
+              </svg>
               <p>{update}</p>
             </div>
           ))}
@@ -75,8 +97,8 @@ export function AnalysisTab({ data }: AnalysisTabProps) {
 
       {/* 2. TITLE RACE ANALYSIS SEGMENT */}
       <div className='space-y-3.5'>
-        <h3 className='text-xs font-bold text-content tracking-tight flex items-center gap-1.5'>
-          ✓ Title Race Analysis
+        <h3 className='text-sm font-bold text-content tracking-tight'>
+          Title Race Analysis
         </h3>
 
         {/* Standings Predictive Probability List Loop */}
@@ -84,66 +106,79 @@ export function AnalysisTab({ data }: AnalysisTabProps) {
           {data.titleRace?.map((player, idx) => (
             <div
               key={idx}
-              className='p-4 bg-surface border border-edge-subtle shadow-sm rounded-2xl space-y-3.5 animate-fade-in'
+              className='p-4 bg-surface border border-edge rounded-2xl space-y-3.5 shadow-2xs animate-fade-in'
             >
               {/* Header Info Row */}
-              <div className='flex items-center justify-between border-b border-edge-subtle pb-2'>
+              <div className='flex items-center justify-between pb-1'>
                 <div className='flex items-center gap-2.5'>
-                  <span className='text-base'>{player.avatar}</span>
+                  <Avatar name={player.username} avatar={player.avatar} size='sm' />
                   <span className='text-xs font-bold text-content'>
                     {player.username}
                   </span>
                 </div>
-                <div className='flex items-center gap-1 text-[11px] font-bold text-content-secondary bg-surface-subtle px-2 py-0.5 rounded-lg border border-edge-subtle'>
-                  <span>🏆</span> {player.probability}
+                <div className='flex items-center gap-1.5 text-xs font-semibold text-content-secondary'>
+                  <svg
+                    className='w-3.5 h-3.5 text-content-subtle'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='1.75'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                  >
+                    <path d='M6 9H4.5a2.5 2.5 0 0 1 0-5H6' />
+                    <path d='M18 9h1.5a2.5 2.5 0 0 0 0-5H18' />
+                    <path d='M4 22h16' />
+                    <path d='M10 14.66V17c0 .55-.45 1-1 1H7' />
+                    <path d='M14 14.66V17c0 .55.45 1 1 1h2' />
+                    <path d='M18 2H6v7a6 6 0 0 0 12 0V2Z' />
+                  </svg>
+                  <span>{player.probability}</span>
                 </div>
               </div>
 
-              {/* Dynamic Inner Insight Metadata Stack */}
-              <div className='space-y-2.5 text-[11px] font-medium leading-relaxed text-content-secondary pl-0.5'>
+              {/* Insights */}
+              <div className='space-y-2.5 text-xs font-normal leading-relaxed text-content-secondary'>
                 <div>
-                  <span className='text-content-subtle text-xs mr-1.5 inline-block'>
-                    📈
-                  </span>
-                  <span className='font-bold text-content block mt-0.5'>
-                    Path
-                  </span>
-                  <p className='mt-0.5 text-content-muted'>{player.path}</p>
+                  <div className='flex items-center gap-1.5 font-bold text-content mb-0.5'>
+                    <svg
+                      className='w-3 h-3 text-content-subtle'
+                      viewBox='0 0 24 24'
+                      fill='none'
+                      stroke='currentColor'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    >
+                      <line x1='7' y1='17' x2='17' y2='7' />
+                      <polyline points='7 7 17 7 17 17' />
+                    </svg>
+                    <span>Path</span>
+                  </div>
+                  <p className='text-content-muted leading-relaxed pl-4'>
+                    {player.path}
+                  </p>
                 </div>
 
                 {player.historicalEdge && (
-                  <div className='pt-0.5'>
-                    <span className='text-content-subtle text-xs mr-1.5 inline-block'>
-                      🔄
-                    </span>
-                    <span className='font-bold text-content block mt-0.5'>
-                      Historical edge
-                    </span>
-                    <p className='mt-0.5 text-content-muted'>
+                  <div>
+                    <div className='flex items-center gap-1.5 font-bold text-content mb-0.5'>
+                      <svg
+                        className='w-3 h-3 text-content-subtle'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        strokeWidth='2'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                      >
+                        <path d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8' />
+                        <path d='M3 3v5h5' />
+                      </svg>
+                      <span>Historical edge</span>
+                    </div>
+                    <p className='text-content-muted leading-relaxed pl-4'>
                       {player.historicalEdge}
-                    </p>
-                  </div>
-                )}
-
-                {player.role && (
-                  <div className='pt-0.5'>
-                    <span className='text-content-subtle text-xs mr-1.5 inline-block'>
-                      ⚆
-                    </span>
-                    <span className='font-bold text-content block mt-0.5'>
-                      Role
-                    </span>
-                    <p className='mt-0.5 text-content-muted'>{player.role}</p>
-                  </div>
-                )}
-
-                {player.mathematicallyEliminated && (
-                  <div className='pt-0.5 border-t border-dashed border-danger-border mt-2 text-danger bg-danger-subtle p-2.5 rounded-xl'>
-                    <span className='font-bold block text-danger-text'>
-                      🔀 Mathematically Eliminated
-                    </span>
-                    <p className='mt-0.5 text-danger font-normal'>
-                      {player.mathematicallyEliminated}
                     </p>
                   </div>
                 )}

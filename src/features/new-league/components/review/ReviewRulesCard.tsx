@@ -1,43 +1,52 @@
 import type { ReviewRulesCardProps } from "../../types";
+import {
+  SyncArrowsIcon,
+  MathPriorityIcon,
+  CheckIcon,
+} from "@/shared/components/icons/LeagueIcons";
 
 export function ReviewRulesCard({
   gameFormat,
   priorityMethod,
   onEdit,
 }: ReviewRulesCardProps) {
+  const formatLabel =
+    gameFormat === "single" ? "Single Game" : "Home and Away";
+
+  const priorityLabel =
+    priorityMethod === "faceToFace" ? "Face To Face" : "Goal Difference";
+
   return (
-    <div className='space-y-2 animate-fade-in'>
-      <div className='flex items-center justify-between'>
-        <h3 className='text-sm font-bold text-content flex items-center gap-2'>
-          ✓ Rules
-        </h3>
-        <button
-          type='button'
-          onClick={onEdit}
-          className='w-7 h-7 bg-badge-pink-bg text-badge-pink-text rounded-full flex items-center justify-center hover:bg-badge-pink-hover active:scale-90 transition-transform cursor-pointer text-xs'
-        >
-          ✏️
-        </button>
+    <div className='space-y-2.5 animate-fade-in'>
+      {/* Step Title Header with Checkmark */}
+      <div className='flex items-center gap-2'>
+        <CheckIcon className='w-4 h-4 text-content stroke-[2.5]' />
+        <h3 className='text-sm font-bold text-content tracking-tight'>Rules</h3>
       </div>
 
-      <div className='bg-surface-subtle/50 border border-edge-subtle rounded-2xl p-4 flex justify-between text-xs gap-4'>
-        <div className='flex-1'>
-          <span className='block text-content-muted font-medium mb-1'>
+      {/* Rules Info Card */}
+      <div
+        onClick={onEdit}
+        className='bg-surface border border-edge rounded-2xl p-4 grid grid-cols-2 gap-4 text-xs shadow-2xs transition-colors hover:border-edge-strong cursor-pointer'
+      >
+        <div>
+          <span className='block text-[11px] font-medium text-content-subtle mb-1.5'>
             Game type
           </span>
-          <span className='font-semibold text-content-secondary truncate block'>
-            {gameFormat === "single" ? "Single Game" : "Home And Away"}
-          </span>
+          <div className='flex items-center gap-2 font-medium text-content'>
+            <SyncArrowsIcon className='w-3.5 h-3.5 text-content-secondary shrink-0' />
+            <span className='truncate'>{formatLabel}</span>
+          </div>
         </div>
-        <div className='flex-1'>
-          <span className='block text-content-muted font-medium mb-1'>
+
+        <div>
+          <span className='block text-[11px] font-medium text-content-subtle mb-1.5'>
             Champion Priority
           </span>
-          <span className='font-semibold text-content-secondary truncate block'>
-            {priorityMethod === "goalDifference"
-              ? "Goal Difference"
-              : "Face To Face"}
-          </span>
+          <div className='flex items-center gap-2 font-medium text-content'>
+            <MathPriorityIcon className='w-3.5 h-3.5 text-content-secondary shrink-0' />
+            <span className='truncate'>{priorityLabel}</span>
+          </div>
         </div>
       </div>
     </div>

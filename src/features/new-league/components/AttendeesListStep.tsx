@@ -1,6 +1,8 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNewLeagueStore } from "../store/newLeagueStore";
+import { CheckIcon } from "@/shared/components/icons/LeagueIcons";
+import { Avatar } from "@/shared/components/ui/Avatar";
 import {
   attendeesSchema,
   type AttendeesFormValues,
@@ -37,16 +39,32 @@ export function AttendeesListStep() {
     const enteredId = currentList[index]?.id?.trim();
     if (!enteredId) return;
 
-    if (enteredId.toLowerCase().includes("leftie")) {
+    const lower = enteredId.toLowerCase();
+    if (lower.includes("leftie") || lower.includes("ilia")) {
       setValue(`list.${index}.resolvedName`, "Ilialeftie", {
         shouldValidate: true,
       });
-      setValue(`list.${index}.avatar`, "🦥");
+      setValue(`list.${index}.avatar`, "sloth");
+    } else if (lower.includes("reza") || lower.includes("mohammad")) {
+      setValue(`list.${index}.resolvedName`, "Mohammad Reza", {
+        shouldValidate: true,
+      });
+      setValue(`list.${index}.avatar`, "monster");
+    } else if (lower.includes("matrix")) {
+      setValue(`list.${index}.resolvedName`, "Matrixforlife", {
+        shouldValidate: true,
+      });
+      setValue(`list.${index}.avatar`, "dog");
+    } else if (lower.includes("farshad")) {
+      setValue(`list.${index}.resolvedName`, "Farshad69420", {
+        shouldValidate: true,
+      });
+      setValue(`list.${index}.avatar`, "cat");
     } else {
       setValue(`list.${index}.resolvedName`, enteredId, {
         shouldValidate: true,
       });
-      setValue(`list.${index}.avatar`, "👤");
+      setValue(`list.${index}.avatar`, "user");
     }
     clearErrors("list");
   };
@@ -68,12 +86,22 @@ export function AttendeesListStep() {
     currentList.forEach((item, index) => {
       const enteredId = item?.id?.trim();
       if (enteredId && !item.resolvedName) {
-        if (enteredId.toLowerCase().includes("leftie")) {
+        const lower = enteredId.toLowerCase();
+        if (lower.includes("leftie") || lower.includes("ilia")) {
           setValue(`list.${index}.resolvedName`, "Ilialeftie");
-          setValue(`list.${index}.avatar`, "🦥");
+          setValue(`list.${index}.avatar`, "sloth");
+        } else if (lower.includes("reza") || lower.includes("mohammad")) {
+          setValue(`list.${index}.resolvedName`, "Mohammad Reza");
+          setValue(`list.${index}.avatar`, "monster");
+        } else if (lower.includes("matrix")) {
+          setValue(`list.${index}.resolvedName`, "Matrixforlife");
+          setValue(`list.${index}.avatar`, "dog");
+        } else if (lower.includes("farshad")) {
+          setValue(`list.${index}.resolvedName`, "Farshad69420");
+          setValue(`list.${index}.avatar`, "cat");
         } else {
           setValue(`list.${index}.resolvedName`, enteredId);
-          setValue(`list.${index}.avatar`, "👤");
+          setValue(`list.${index}.avatar`, "user");
         }
       }
     });
@@ -81,15 +109,11 @@ export function AttendeesListStep() {
     handleSubmit(onSubmit)(e);
   };
 
-  // Intercept the removal action to maintain the strict 3-slot floor boundary
   const handleRemoveClick = (index: number) => {
     if (currentList.length <= 3) {
-      // If removing this would leave us with less than 3 total slots,
-      // we remove the selected row, but immediately push a clean empty input slot to the end.
       remove(index);
       append({ id: "" });
     } else {
-      // Otherwise, we have plenty of fields on the screen, just remove it normally
       remove(index);
     }
   };
@@ -101,13 +125,17 @@ export function AttendeesListStep() {
       className='space-y-5 animate-fade-in text-left'
     >
       {/* Informational Header Section */}
-      <div className='space-y-1'>
-        <h2 className='text-sm font-bold text-content flex items-center gap-2'>
-          ✓ Add Attendees for the league.
-        </h2>
-        <div className='flex items-start gap-3 p-3 bg-surface-subtle border border-edge-subtle rounded-xl'>
+      <div className='space-y-2'>
+        <div className='flex items-center gap-2'>
+          <CheckIcon className='w-4 h-4 text-content stroke-[2.5]' />
+          <h2 className='text-sm font-bold text-content tracking-tight'>
+            Add Attendees for the league.
+          </h2>
+        </div>
+
+        <div className='flex items-start gap-3 p-3.5 bg-surface-subtle border border-edge-subtle rounded-2xl'>
           <span className='text-content-subtle text-sm mt-0.5'>ℹ️</span>
-          <p className='text-[11px] text-content-muted leading-normal'>
+          <p className='text-[11px] text-content-muted leading-normal font-medium'>
             After playing with people, you can add them as a friend to access
             them easier here. For now, search your friend's IDs and add them
           </p>
@@ -131,20 +159,18 @@ export function AttendeesListStep() {
             return (
               <div
                 key={field.id}
-                className='flex items-center justify-between p-3.5 bg-surface-subtle border border-edge rounded-xl animate-fade-in'
+                className='flex items-center justify-between p-3.5 bg-surface border border-edge rounded-2xl shadow-2xs animate-fade-in'
               >
-                <div className='flex items-center gap-2.5'>
-                  <div className='w-7 h-7 rounded-full bg-badge-orange-bg flex items-center justify-center text-sm'>
-                    {avatar}
-                  </div>
+                <div className='flex items-center gap-3'>
+                  <Avatar name={resolvedName} avatar={avatar} size='sm' />
                   <span className='text-xs font-semibold text-content'>
                     {resolvedName}
                   </span>
                 </div>
                 <button
                   type='button'
-                  onClick={() => handleRemoveClick(index)} // Uses our protective structural interceptor
-                  className='px-2.5 py-1 text-[10px] font-bold text-content-muted hover:text-content bg-surface border border-edge rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer flex items-center gap-1'
+                  onClick={() => handleRemoveClick(index)}
+                  className='px-2.5 py-1 text-[11px] font-medium text-content-muted hover:text-content bg-surface border border-edge rounded-lg shadow-2xs transition-all active:scale-95 cursor-pointer flex items-center gap-1'
                 >
                   ー Remove
                 </button>
@@ -163,7 +189,6 @@ export function AttendeesListStep() {
                   User's ID
                 </label>
 
-                {/* Optional UI cleanup: If there are more than 3 input fields total, let them close an un-added empty slot */}
                 {currentList.length > 3 && (
                   <button
                     type='button'
@@ -177,7 +202,7 @@ export function AttendeesListStep() {
 
               <div className='relative flex items-center'>
                 <input
-                  placeholder='ID'
+                  placeholder='ID (e.g. reza, matrix, leftie)'
                   {...register(`list.${index}.id` as const)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
@@ -185,14 +210,14 @@ export function AttendeesListStep() {
                       handleAddClick(index);
                     }
                   }}
-                  className='w-full pl-4 pr-20 py-3 bg-surface-subtle border border-edge rounded-xl text-sm text-content placeholder:text-content-subtle focus:outline-none focus:border-brand focus:bg-surface transition-all'
+                  className='w-full pl-4 pr-20 py-3 bg-surface border border-edge rounded-xl text-sm text-content placeholder:text-content-subtle focus:outline-none focus:border-brand transition-all'
                 />
 
                 {currentInputValue.trim().length > 0 && (
                   <button
                     type='button'
                     onClick={() => handleAddClick(index)}
-                    className='absolute right-2 px-3 py-1.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg text-[11px] font-bold rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer animate-fade-in'
+                    className='absolute right-2 px-3 py-1.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg text-[11px] font-semibold rounded-lg shadow-2xs transition-all active:scale-95 cursor-pointer animate-fade-in'
                   >
                     ＋ Add
                   </button>

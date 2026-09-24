@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNewLeagueStore } from "../store/newLeagueStore";
 import { Input } from "@/shared/components/ui/Input";
 import { Select } from "@/shared/components/ui/Select";
+import { CheckIcon } from "@/shared/components/icons/LeagueIcons";
 import {
   leagueSetupSchema,
   type LeagueSetupFormValues,
@@ -25,7 +26,7 @@ export function LeagueSetupStep() {
     formState: { errors },
   } = useForm<LeagueSetupFormValues>({
     resolver: zodResolver(leagueSetupSchema),
-    defaultValues: { leagueName, fifaVersion },
+    defaultValues: { leagueName, fifaVersion: fifaVersion || "fc25" },
   });
 
   const onSubmit = (data: LeagueSetupFormValues) => {
@@ -39,10 +40,17 @@ export function LeagueSetupStep() {
       onSubmit={handleSubmit(onSubmit)}
       className='space-y-5 animate-fade-in text-left'
     >
+      <div className='flex items-center gap-2'>
+        <CheckIcon className='w-4 h-4 text-content stroke-[2.5]' />
+        <h2 className='text-sm font-bold text-content tracking-tight'>
+          Basics
+        </h2>
+      </div>
+
       <div>
         <Input
           label='Set a name for your league'
-          placeholder='Name'
+          placeholder='Name of the league'
           {...register("leagueName")}
           error={errors.leagueName?.message}
         />

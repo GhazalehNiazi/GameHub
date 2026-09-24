@@ -1,66 +1,55 @@
 import type { ReviewBasicsCardProps } from "../../types";
+import { PenIcon, GamepadIcon, CheckIcon } from "@/shared/components/icons/LeagueIcons";
 
 export function ReviewBasicsCard({
   leagueName,
   fifaVersion,
   onEdit,
 }: ReviewBasicsCardProps) {
-  // Compute current date matching the formatting visible in your design mockup
-  const currentDateString = new Date()
-    .toLocaleDateString("zh-Hans-CN", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-    .replace(/\//g, "/");
+  // Format FIFA version to display e.g. "FC 25"
+  const formattedFifaVersion = (() => {
+    if (!fifaVersion) return "FC 25";
+    const clean = fifaVersion.toLowerCase();
+    if (clean.includes("25")) return "FC 25";
+    if (clean.includes("24")) return "FC 24";
+    if (clean.includes("23")) return "FIFA 23";
+    if (clean.includes("22")) return "FIFA 22";
+    return fifaVersion.toUpperCase();
+  })();
 
   return (
-    <div className='space-y-2 animate-fade-in'>
-      <div className='flex items-center justify-between'>
-        <h3 className='text-sm font-bold text-content flex items-center gap-2'>
-          ✓ Basics
+    <div className='space-y-2.5 animate-fade-in'>
+      {/* Step Title Header with Checkmark */}
+      <div className='flex items-center gap-2'>
+        <CheckIcon className='w-4 h-4 text-content stroke-[2.5]' />
+        <h3 className='text-sm font-bold text-content tracking-tight'>
+          Basics
         </h3>
-        <button
-          type='button'
-          onClick={onEdit}
-          className='w-7 h-7 bg-badge-pink-bg text-badge-pink-text rounded-full flex items-center justify-center hover:bg-badge-pink-hover active:scale-90 transition-transform cursor-pointer text-xs'
-        >
-          ✏️
-        </button>
       </div>
 
-      <div className='bg-surface-subtle border border-edge-subtle rounded-2xl p-4 grid grid-cols-2 gap-y-3.5 gap-x-2 text-xs'>
+      {/* Basics Info Card */}
+      <div
+        onClick={onEdit}
+        className='bg-surface border border-edge rounded-2xl p-4 grid grid-cols-2 gap-4 text-xs shadow-2xs transition-colors hover:border-edge-strong cursor-pointer'
+      >
         <div>
-          <span className='block text-content-subtle font-medium mb-1'>
+          <span className='block text-[11px] font-medium text-content-subtle mb-1.5'>
             Name of the league
           </span>
-          <span className='font-semibold text-content flex items-center gap-1.5 truncate'>
-            🖋️ {leagueName || "Calciopoli"}
-          </span>
+          <div className='flex items-center gap-2 font-medium text-content'>
+            <PenIcon className='w-3.5 h-3.5 text-content-secondary shrink-0' />
+            <span className='truncate'>{leagueName || "Name of the league"}</span>
+          </div>
         </div>
+
         <div>
-          <span className='block text-content-subtle font-medium mb-1'>
+          <span className='block text-[11px] font-medium text-content-subtle mb-1.5'>
             Fifa Version
           </span>
-          <span className='font-semibold text-content flex items-center gap-1.5 uppercase'>
-            🎮 {fifaVersion || "FC 25"}
-          </span>
-        </div>
-        <div>
-          <span className='block text-content-subtle font-medium mb-1'>
-            Type of the league
-          </span>
-          <span className='font-semibold text-content flex items-center gap-1.5'>
-            👤 Normal
-          </span>
-        </div>
-        <div>
-          <span className='block text-content-subtle font-medium mb-1'>
-            Creation Date
-          </span>
-          <span className='font-semibold text-content flex items-center gap-1.5 font-mono'>
-            📅 {currentDateString}
-          </span>
+          <div className='flex items-center gap-2 font-medium text-content'>
+            <GamepadIcon className='w-4 h-4 text-content-secondary shrink-0' />
+            <span className='uppercase'>{formattedFifaVersion}</span>
+          </div>
         </div>
       </div>
     </div>

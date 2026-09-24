@@ -9,7 +9,9 @@ export function OfflineBanner() {
   useEffect(() => {
     if (!isOnline) {
       setWasOffline(true);
-    } else if (wasOffline) {
+      return;
+    }
+    if (wasOffline) {
       setShowRestored(true);
       const timer = setTimeout(() => {
         setShowRestored(false);
@@ -17,6 +19,7 @@ export function OfflineBanner() {
       }, 4000);
       return () => clearTimeout(timer);
     }
+    return;
   }, [isOnline, wasOffline]);
 
   if (!isOnline) {
