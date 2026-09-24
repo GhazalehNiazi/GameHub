@@ -1,16 +1,27 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios";
+import axios, { type AxiosInstance } from "axios";
 import type { ApiResponse } from "./types";
 
-/** Toggle flag for Mock vs Real Backend APIs */
-export const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API !== "false"; // Default true
+/** Known mock / local placeholder URLs */
+const MOCK_PLACEHOLDERS = ["/api/v1", "https://api.example.com", "http://localhost:3000/mock", ""];
 
-/** Default API Base URL */
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+/** Default API Base URL - set VITE_API_BASE_URL in .env or replace here when backend arrives */
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api/v1";
+
+/**
+ * Toggle flag for Mock vs Real Backend APIs.
+ * Automatically switches to false (real backend) as soon as BASE_URL is replaced
+ * with a real backend URL, or can be explicitly overridden via VITE_USE_MOCK_API ("true" / "false").
+ */
+export const USE_MOCK_API: boolean = (() => {
+  if (import.meta.env.VITE_USE_MOCK_API === "false") return false;
+  if (import.meta.env.VITE_USE_MOCK_API === "true") return true;
+  return MOCK_PLACEHOLDERS.includes(BASE_URL.trim());
+})();
 
 /** Configured Axios Client Instance */
 export const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000,
+  timeout: 15000,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

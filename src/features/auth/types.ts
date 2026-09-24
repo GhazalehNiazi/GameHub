@@ -27,7 +27,13 @@ export interface PhoneFormStepProps {
 export interface OtpVerificationStepProps {
   otp: string[];
   onChange: (otp: string[]) => void;
+  onBlur?: () => void;
+  onResendOtp?: () => Promise<void> | void;
+  isResending?: boolean;
+  disabled?: boolean;
   error?: string;
+  phone?: string;
+  initialTimerSeconds?: number;
 }
 
 export interface ProfileFormInputs {

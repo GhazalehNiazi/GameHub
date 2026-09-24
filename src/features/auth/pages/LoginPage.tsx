@@ -63,6 +63,26 @@ export default function LoginPage() {
     );
   };
 
+  const onResendOtp = async () => {
+    sendOtpMutation.reset();
+    verifyOtpMutation.reset();
+    otpForm.clearErrors("otp");
+
+    return new Promise<void>((resolve, reject) => {
+      sendOtpMutation.mutate(
+        { phone: phoneForm.getValues("phone") },
+        {
+          onSuccess: () => {
+            resolve();
+          },
+          onError: (err) => {
+            reject(err);
+          },
+        }
+      );
+    });
+  };
+
   const footerAction = (
     <button
       type='submit'
@@ -88,7 +108,11 @@ export default function LoginPage() {
         {step === 2 && (
           <div className='absolute top-5 left-5 h-6 w-full flex items-center mb-2 z-10'>
             <button
-              onClick={() => setStep(1)}
+              onClick={() => {
+                sendOtpMutation.reset();
+                verifyOtpMutation.reset();
+                setStep(1);
+              }}
               className='p-1 -ml-2 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer'
             >
               <img src={backArrowIcon} />
@@ -102,7 +126,7 @@ export default function LoginPage() {
             <img src={authimg} className='h-[360px] max-h-[360px] w-full ' />
           </div>
           <h1 className='text-xl font-bold text-zinc-900 tracking-tight mt-[380px]'>
-            Welcome
+            {step === 1 ? "Welcome" : "Signing Up"}
           </h1>
         </div>
 
@@ -133,9 +157,19 @@ export default function LoginPage() {
             >
               <OtpVerificationStep
                 otp={otpValue}
-                onChange={(val) =>
-                  otpForm.setValue("otp", val, { shouldValidate: true })
-                }
+                phone={phoneValue}
+                onChange={(val) => {
+                  otpForm.setValue("otp", val, { shouldValidate: false });
+                  if (otpForm.formState.errors.otp) {
+                    otpForm.clearErrors("otp");
+                  }
+                }}
+                onBlur={() => {
+                  otpForm.trigger("otp");
+                }}
+                onResendOtp={onResendOtp}
+                isResending={sendOtpMutation.isPending}
+                disabled={isPending}
                 error={otpForm.formState.errors.otp?.message}
               />
             </form>
