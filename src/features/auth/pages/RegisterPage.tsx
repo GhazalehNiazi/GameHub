@@ -13,6 +13,12 @@ import type {
 } from "../schemas/authSchemas";
 import backArrowIcon from "@/../public/assets/icons/back-arrow.svg";
 
+const STEP_TITLES: Record<1 | 2 | 3, string> = {
+  1: "Getting to know you!",
+  2: "Personalizing Experiences",
+  3: "Securing your account",
+};
+
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -89,28 +95,30 @@ export default function RegisterPage() {
   return (
     <main className='page-content safe-top safe-bottom bg-white'>
       <AppScreenLayout stickyFooter={footerAction}>
-        <div className='absolute top-5 left-5 h-6 w-full flex items-center mb-2 z-10'>
+        <div className='flex items-center h-6 mb-2'>
           <button
             type='button'
             onClick={handleBack}
             className='p-1 -ml-2 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer'
+            aria-label='Back'
           >
             <img src={backArrowIcon} alt='Back' />
           </button>
         </div>
 
-        <h1 className='text-lg font-bold text-zinc-900 tracking-tight text-center'>
-          Creating Account
-        </h1>
         <StepProgressBar currentStep={step} />
 
+        <h1 className='text-xl font-bold text-zinc-900 tracking-tight text-center mt-6 mb-6'>
+          {STEP_TITLES[step]}
+        </h1>
+
         {registerMutation.error && (
-          <div className='mt-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center'>
+          <div className='mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center'>
             {registerMutation.error.message}
           </div>
         )}
 
-        <div className='mt-6'>
+        <div>
           {step === 1 && (
             <ProfileDetailsStep
               initialValues={profileData}

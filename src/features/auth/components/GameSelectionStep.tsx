@@ -61,7 +61,7 @@ export function GameSelectionStep({
     >
       <input type='hidden' {...register("game")} />
       <p className='text-xs text-zinc-600'>
-        What was the first Fifa game you remember playing from?
+        What was the first Fifa game you remember started playing from?
       </p>
 
       {errors.game && (

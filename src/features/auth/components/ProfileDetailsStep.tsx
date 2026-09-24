@@ -40,8 +40,8 @@ export function ProfileDetailsStep({
       onSubmit={handleSubmit(onSubmit)}
       className='space-y-4 animate-fade-in text-left'
     >
-      <p className='text-xs text-zinc-500'>
-        Provide your information to create your account.
+      <p className='text-xs text-zinc-600'>
+        Please Provide the required information to create your account.
       </p>
 
       <div className='space-y-3'>
@@ -61,14 +61,17 @@ export function ProfileDetailsStep({
         />
       </div>
 
-      <div className='flex items-start gap-2 p-3 bg-zinc-50 border rounded-xl'>
-        <p className='text-[11px] text-zinc-500'>
-          Your Username must be unique and cannot be changed later.
+      <div className='flex items-center gap-3 p-3 bg-zinc-50 border border-zinc-100 rounded-xl'>
+        <div className='w-5 h-5 rounded-full bg-zinc-700 text-white flex items-center justify-center font-serif text-xs font-bold flex-shrink-0'>
+          i
+        </div>
+        <p className='text-[12px] text-zinc-500 leading-snug'>
+          Your Username must be unique and it can not be changed later.
         </p>
       </div>
 
       <div className='space-y-2'>
-        <h4 className='text-xs font-medium text-zinc-700'>Choose an avatar</h4>
+        <h4 className='text-xs font-medium text-zinc-700'>Chose your avatar</h4>
         <input type='hidden' {...register("avatar")} />
         <div className='flex gap-3 overflow-x-auto py-1'>
           {AVATARS.map((av) => (

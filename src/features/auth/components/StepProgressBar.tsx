@@ -2,7 +2,7 @@ import type { StepProgressBarProps } from "../types";
 
 export function StepProgressBar({ currentStep }: StepProgressBarProps) {
   return (
-    <div className='flex items-center justify-between gap-2.5 w-full my-4'>
+    <div className='flex items-center justify-between gap-3 w-full my-4'>
       {[1, 2, 3].map((step) => {
         const isCompleted = currentStep > step;
         const isActive = currentStep === step;
@@ -10,20 +10,17 @@ export function StepProgressBar({ currentStep }: StepProgressBarProps) {
         return (
           <div
             key={step}
-            className={`h-2.5 flex-1 rounded-full border transition-all duration-300 ${
-              isCompleted
-                ? "bg-teal-500 border-teal-500 flex items-center justify-center"
-                : isActive
-                  ? "bg-teal-500 border-teal-500"
-                  : "bg-white border-zinc-300"
+            style={{ flex: isActive ? "2.8 1 0%" : "1 1 0%" }}
+            className={`h-7 rounded-full border-2 border-teal-500 transition-all duration-300 ease-in-out flex items-center justify-center ${
+              isCompleted || isActive ? "bg-teal-500" : "bg-white"
             }`}
           >
             {isCompleted && (
               <svg
-                className='w-2 h-2 text-white'
+                className='w-4 h-4 text-white'
                 fill='none'
                 stroke='currentColor'
-                strokeWidth='4'
+                strokeWidth='2.5'
                 viewBox='0 0 24 24'
               >
                 <path
@@ -39,3 +36,4 @@ export function StepProgressBar({ currentStep }: StepProgressBarProps) {
     </div>
   );
 }
+
