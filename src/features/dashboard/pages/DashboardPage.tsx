@@ -1,4 +1,4 @@
-import { useNavigate } from "react";
+import { useNavigate } from "react-router";
 import { AppScreenLayout } from "@/shared/components/layout/AppScreenLayout";
 import { useCurrentUser, useLeagues } from "@/services/hooks";
 
