@@ -17,13 +17,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className='w-full space-y-1.5 text-left relative'>
         {label && (
-          <label htmlFor={id} className='block text-xs font-medium text-zinc-700'>
+          <label htmlFor={id} className='block text-xs font-medium text-content-secondary'>
             {label}
           </label>
         )}
         <div className='relative flex items-center'>
           {subLabel && (
-            <span className='absolute left-4 top-2 text-[10px] text-zinc-400 font-medium pointer-events-none'>
+            <span className='absolute left-4 top-2 text-[10px] text-content-subtle font-medium pointer-events-none'>
               {subLabel}
             </span>
           )}
@@ -32,9 +32,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             id={id}
             className={`w-full pl-4 pr-10 pb-2.5 rounded-xl border ${
               error
-                ? "border-red-500 focus:border-red-500"
-                : "border-zinc-200 focus:border-zinc-400"
-            } bg-zinc-50 text-sm text-zinc-900 focus:outline-none focus:bg-white transition-all appearance-none cursor-pointer ${
+                ? "border-danger focus:border-danger"
+                : "border-edge focus:border-brand"
+            } bg-surface-subtle text-sm text-content focus:outline-none focus:bg-surface transition-all appearance-none cursor-pointer ${
               subLabel ? "pt-5" : "pt-2.5"
             } ${className}`}
             {...props}
@@ -51,7 +51,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
           {/* Customized SVG Chevron Indicator Down arrow */}
-          <div className='absolute right-4 pointer-events-none text-zinc-500'>
+          <div className='absolute right-4 pointer-events-none text-content-muted'>
             <svg
               className='w-4 h-4'
               fill='none'
@@ -67,7 +67,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             </svg>
           </div>
         </div>
-        {error && <p className='text-[10px] text-red-500 pl-1'>{error}</p>}
+        {error && <p className='text-[10px] text-danger pl-1'>{error}</p>}
       </div>
     );
   }

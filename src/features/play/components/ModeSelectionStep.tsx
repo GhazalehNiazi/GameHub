@@ -14,7 +14,7 @@ export function ModeSelectionStep() {
 
   return (
     <div className='space-y-5 animate-fade-in text-left'>
-      <p className='text-xs text-zinc-500 font-medium'>
+      <p className='text-xs text-content-muted font-medium'>
         Select the play mode you want to play.
       </p>
 

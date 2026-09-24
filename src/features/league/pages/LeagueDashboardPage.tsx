@@ -56,13 +56,13 @@ export default function LeagueDashboardPage() {
   };
 
   return (
-    <main className='page-content safe-top safe-bottom bg-white relative'>
+    <main className='page-content safe-top safe-bottom bg-surface relative'>
       <AppScreenLayout showNavigation>
         {/* Header Block */}
-        <div className='flex items-center justify-between w-full border-b border-zinc-50 pb-3 mb-4'>
+        <div className='flex items-center justify-between w-full border-b border-edge-subtle pb-3 mb-4'>
           <button
             onClick={() => navigate("/play")}
-            className='p-1 -ml-1 text-zinc-600 hover:text-zinc-900 cursor-pointer'
+            className='p-1 -ml-1 text-content-secondary hover:text-content cursor-pointer'
           >
             <svg
               className='w-5 h-5'
@@ -78,10 +78,10 @@ export default function LeagueDashboardPage() {
               />
             </svg>
           </button>
-          <h1 className='text-base font-bold text-zinc-900 tracking-tight'>
+          <h1 className='text-base font-bold text-content tracking-tight'>
             {leagueData?.name || "League Dashboard"}
           </h1>
-          <div className='w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-base border'>
+          <div className='w-8 h-8 rounded-full bg-brand-subtle flex items-center justify-center text-base border border-edge'>
             🐵
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function LeagueDashboardPage() {
 
         {/* Loading Indicator or Content */}
         {isLoading ? (
-          <div className='flex justify-center items-center py-16 text-zinc-400 text-xs animate-pulse'>
+          <div className='flex justify-center items-center py-16 text-content-subtle text-xs animate-pulse'>
             Loading league data...
           </div>
         ) : (
@@ -112,7 +112,7 @@ export default function LeagueDashboardPage() {
               />
             )}
             {activeTab === "table" && (
-              <div className='text-xs text-zinc-400 text-center py-8'>
+              <div className='text-xs text-content-subtle text-center py-8'>
                 Table coming soon...
               </div>
             )}

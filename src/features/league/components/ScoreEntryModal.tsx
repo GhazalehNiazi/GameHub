@@ -38,47 +38,47 @@ export function ScoreEntryModal({
       {/* Sheet Frame Container */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='bg-white rounded-t-[28px] p-6 space-y-6 shadow-2xl border-t border-zinc-100 animate-slide-up flex-shrink-0 text-left'
+        className='bg-surface-elevated rounded-t-[28px] p-6 space-y-6 shadow-2xl border-t border-edge animate-slide-up flex-shrink-0 text-left'
       >
         {/* Sheet Pull Bar Top Accent */}
-        <div className='w-12 h-1.5 bg-zinc-200 rounded-full mx-auto -mt-2 mb-2' />
+        <div className='w-12 h-1.5 bg-surface-muted rounded-full mx-auto -mt-2 mb-2' />
 
-        <div className='flex items-center gap-2 text-sm font-bold text-zinc-900'>
+        <div className='flex items-center gap-2 text-sm font-bold text-content'>
           <span>🎮</span> Entering Fixtures
         </div>
 
         {(errors.homeScore || errors.awayScore) && (
-          <p className='text-[10px] text-red-500 text-center'>
+          <p className='text-[10px] text-danger text-center'>
             {errors.homeScore?.message || errors.awayScore?.message}
           </p>
         )}
 
         {/* Input Interactive Dashboard */}
-        <div className='bg-zinc-50 rounded-2xl p-4 grid grid-cols-2 gap-4 border border-zinc-100'>
+        <div className='bg-surface-subtle rounded-2xl p-4 grid grid-cols-2 gap-4 border border-edge-subtle'>
           {/* Home Node */}
           <div className='flex flex-col items-center space-y-3'>
             <div className='flex items-center gap-2'>
-              <div className='w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-sm'>
+              <div className='w-7 h-7 rounded-full bg-badge-orange-bg flex items-center justify-center text-sm'>
                 {match.homeAvatar}
               </div>
-              <span className='text-xs font-bold text-zinc-800'>
+              <span className='text-xs font-bold text-content'>
                 {match.homePlayer}
               </span>
             </div>
             <button
               type='button'
               onClick={() => setValue("homeScore", homeScore + 1, { shouldValidate: true })}
-              className='w-8 h-8 rounded-full border border-zinc-200 bg-white shadow-sm flex items-center justify-center active:scale-90 text-zinc-500 cursor-pointer'
+              className='w-8 h-8 rounded-full border border-edge bg-surface shadow-sm flex items-center justify-center active:scale-90 text-content-secondary hover:text-content cursor-pointer'
             >
               ▲
             </button>
-            <div className='w-full bg-white border border-zinc-200 py-3 rounded-xl text-base font-black text-zinc-800 text-center shadow-inner'>
+            <div className='w-full bg-surface border border-edge py-3 rounded-xl text-base font-black text-content text-center shadow-inner'>
               {homeScore}
             </div>
             <button
               type='button'
               onClick={() => setValue("homeScore", Math.max(0, homeScore - 1), { shouldValidate: true })}
-              className='w-8 h-8 rounded-full border border-zinc-200 bg-white shadow-sm flex items-center justify-center active:scale-90 text-zinc-500 cursor-pointer'
+              className='w-8 h-8 rounded-full border border-edge bg-surface shadow-sm flex items-center justify-center active:scale-90 text-content-secondary hover:text-content cursor-pointer'
             >
               ▼
             </button>
@@ -87,27 +87,27 @@ export function ScoreEntryModal({
           {/* Away Node */}
           <div className='flex flex-col items-center space-y-3'>
             <div className='flex items-center gap-2'>
-              <div className='w-7 h-7 rounded-full bg-purple-100 flex items-center justify-center text-sm'>
+              <div className='w-7 h-7 rounded-full bg-badge-purple-bg flex items-center justify-center text-sm'>
                 {match.awayAvatar}
               </div>
-              <span className='text-xs font-bold text-zinc-800'>
+              <span className='text-xs font-bold text-content'>
                 {match.awayPlayer}
               </span>
             </div>
             <button
               type='button'
               onClick={() => setValue("awayScore", awayScore + 1, { shouldValidate: true })}
-              className='w-8 h-8 rounded-full border border-zinc-200 bg-white shadow-sm flex items-center justify-center active:scale-90 text-zinc-500 cursor-pointer'
+              className='w-8 h-8 rounded-full border border-edge bg-surface shadow-sm flex items-center justify-center active:scale-90 text-content-secondary hover:text-content cursor-pointer'
             >
               ▲
             </button>
-            <div className='w-full bg-white border border-zinc-200 py-3 rounded-xl text-base font-black text-zinc-800 text-center shadow-inner'>
+            <div className='w-full bg-surface border border-edge py-3 rounded-xl text-base font-black text-content text-center shadow-inner'>
               {awayScore}
             </div>
             <button
               type='button'
               onClick={() => setValue("awayScore", Math.max(0, awayScore - 1), { shouldValidate: true })}
-              className='w-8 h-8 rounded-full border border-zinc-200 bg-white shadow-sm flex items-center justify-center active:scale-90 text-zinc-500 cursor-pointer'
+              className='w-8 h-8 rounded-full border border-edge bg-surface shadow-sm flex items-center justify-center active:scale-90 text-content-secondary hover:text-content cursor-pointer'
             >
               ▼
             </button>
@@ -117,7 +117,7 @@ export function ScoreEntryModal({
         {/* Locked Save Handle Trigger CTA */}
         <button
           type='submit'
-          className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 text-white font-semibold text-sm rounded-xl transition-all active:scale-[0.99] shadow-md flex items-center justify-center gap-1.5 cursor-pointer'
+          className='w-full py-3.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg font-semibold text-sm rounded-xl transition-all active:scale-[0.99] shadow-md flex items-center justify-center gap-1.5 cursor-pointer'
         >
           ✓ Confirm Results
         </button>

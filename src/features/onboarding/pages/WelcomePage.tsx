@@ -12,7 +12,7 @@ export default function WelcomePage() {
   const footerAction = (
     <button
       onClick={() => navigate("/login")}
-      className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center'
+      className='w-full py-3.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center'
     >
       Continue
     </button>
@@ -27,10 +27,10 @@ export default function WelcomePage() {
             <img src={logo} className='rounded-2xl' />
           </div>
 
-          <h1 className='text-[18px] font-bold text-[rgba(33, 33, 33, 1)] tracking-tight mt-6'>
+          <h1 className='text-[18px] font-bold text-content tracking-tight mt-6'>
             /UJ Game Hub
           </h1>
-          <p className='text-xs text-zinc-500 max-w-[280px] mt-2 leading-relaxed'>
+          <p className='text-xs text-content-muted max-w-[280px] mt-2 leading-relaxed'>
             Manage your gaming habits here with friends
           </p>
         </div>

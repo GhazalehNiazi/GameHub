@@ -10,7 +10,7 @@ export function OnboardingLayout({
       <div className='flex-1 overflow-y-auto pb-6'>{children}</div>
 
       {/* Sticky Bottom Footer Zone */}
-      <div className='sticky bottom-0 bg-white pt-4 pb-2 border-t border-zinc-100'>
+      <div className='sticky bottom-0 bg-surface pt-4 pb-2 border-t border-edge-subtle'>
         {footerButton}
       </div>
     </div>

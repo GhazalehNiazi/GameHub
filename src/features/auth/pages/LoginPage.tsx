@@ -85,7 +85,7 @@ export default function LoginPage() {
       type='submit'
       form={currentFormId}
       disabled={isPending}
-      className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 disabled:opacity-40 disabled:hover:bg-zinc-800 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-2'
+      className='w-full py-3.5 bg-action-primary hover:bg-action-primary-hover disabled:opacity-40 disabled:hover:bg-action-primary text-action-primary-fg font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-2'
     >
       {isPending ? (
         <span className='animate-pulse'>Processing...</span>
@@ -96,7 +96,7 @@ export default function LoginPage() {
   );
 
   return (
-    <main className='page-content safe-bottom bg-white'>
+    <main className='page-content safe-bottom bg-surface'>
       <AppScreenLayout
         stickyFooter={footerAction}
         className='flex flex-col justify-between'
@@ -106,7 +106,7 @@ export default function LoginPage() {
             <button
               type='button'
               onClick={handleBack}
-              className='p-1 -ml-2 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer'
+              className='p-1 -ml-2 text-content-secondary hover:text-content active:scale-90 transition-transform cursor-pointer'
             >
               <img src={backArrowIcon} alt='Back' />
             </button>
@@ -117,14 +117,14 @@ export default function LoginPage() {
           <div className='absolute top-0 left-0 w-full h-[360px] max-h-[360px] rounded-[32px]'>
             <img src={authimg} alt='Auth visual' className='h-[360px] max-h-[360px] w-full' />
           </div>
-          <h1 className='text-xl font-bold text-zinc-900 tracking-tight mt-[380px]'>
+          <h1 className='text-xl font-bold text-content tracking-tight mt-[380px]'>
             {step === 1 ? "Welcome" : "Signing Up"}
           </h1>
         </div>
 
         <div className='mt-12'>
           {apiErrorMsg && (
-            <div className='mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center'>
+            <div className='mb-4 p-3 bg-danger-subtle border border-danger-border rounded-xl text-xs text-danger-text font-medium text-center'>
               {apiErrorMsg}
             </div>
           )}

@@ -19,14 +19,14 @@ export default function PlayPage() {
   };
 
   return (
-    <main className='page-content safe-top safe-bottom bg-white'>
+    <main className='page-content safe-top safe-bottom bg-surface'>
       {/* Render with true global navigation shell bars active at the bottom */}
       <AppScreenLayout showNavigation>
         {/* Header Action Navigation Control Row */}
-        <div className='flex items-center justify-between w-full border-b border-zinc-50 pb-3 mb-4'>
+        <div className='flex items-center justify-between w-full border-b border-edge-subtle pb-3 mb-4'>
           <button
             onClick={handleBackNavigation}
-            className={`p-1 -ml-1 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer ${
+            className={`p-1 -ml-1 text-content-secondary hover:text-content active:scale-90 transition-transform cursor-pointer ${
               currentStep === 1 ? "opacity-20 pointer-events-none" : ""
             }`}
           >
@@ -45,11 +45,11 @@ export default function PlayPage() {
             </svg>
           </button>
 
-          <h1 className='text-base font-bold text-zinc-900 tracking-tight'>
+          <h1 className='text-base font-bold text-content tracking-tight'>
             Play Page
           </h1>
 
-          <div className='w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-base border'>
+          <div className='w-8 h-8 rounded-full bg-brand-subtle flex items-center justify-center text-base border border-edge-subtle'>
             🐵
           </div>
         </div>

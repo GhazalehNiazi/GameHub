@@ -31,7 +31,7 @@ export function AppScreenLayout({
 
       {/* 2. Rigid Pinned System Bottom Zone */}
       {(stickyFooter || showNavigation) && (
-        <div className='flex-shrink-0 px-6 pb-4 pt-2 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800/80 space-y-4'>
+        <div className='flex-shrink-0 px-6 pb-4 pt-2 bg-surface border-t border-edge space-y-4'>
           {/* Top operational row for custom task buttons */}
           {stickyFooter && <div>{stickyFooter}</div>}
 

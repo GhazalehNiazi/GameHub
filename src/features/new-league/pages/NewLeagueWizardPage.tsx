@@ -64,7 +64,7 @@ export default function NewLeagueWizardPage() {
           type='button'
           onClick={handleCreateLeagueSubmit}
           disabled={createLeagueMutation.isPending}
-          className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 disabled:opacity-50 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center block'
+          className='w-full py-3.5 bg-action-primary hover:bg-action-primary-hover disabled:opacity-50 text-action-primary-fg font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center block'
         >
           {createLeagueMutation.isPending ? "Creating League..." : "Create the League"}
         </button>
@@ -76,7 +76,7 @@ export default function NewLeagueWizardPage() {
         <button
           type='button' // ← CRITICAL: Keeps this safe from accidental HTML form bubbles
           onClick={handleStartLeagueFinal}
-          className='w-full py-3.5 bg-zinc-800 hover:bg-zinc-900 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center block'
+          className='w-full py-3.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center block'
         >
           Start the League
         </button>
@@ -88,14 +88,14 @@ export default function NewLeagueWizardPage() {
         <button
           type='button'
           onClick={handleBack}
-          className='flex-1 py-3.5 border border-zinc-200 text-zinc-700 font-semibold text-sm rounded-xl active:scale-[0.99] transition-all cursor-pointer text-center'
+          className='flex-1 py-3.5 border border-edge text-content-secondary font-semibold text-sm rounded-xl active:scale-[0.99] transition-all cursor-pointer text-center'
         >
           Previous Step
         </button>
         <button
           type='submit'
           form={`new-league-form-${step}`}
-          className='flex-[1.3] py-3.5 bg-zinc-800 hover:bg-zinc-900 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-1.5'
+          className='flex-[1.3] py-3.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-1.5'
         >
           Continue <span className='text-xs'>›</span>
         </button>
@@ -104,14 +104,14 @@ export default function NewLeagueWizardPage() {
   };
 
   return (
-    <main className='page-content safe-top safe-bottom bg-white'>
+    <main className='page-content safe-top safe-bottom bg-surface'>
       <AppScreenLayout stickyFooter={getFooterAction()}>
         {/* Navigation Action Header */}
-        <div className='flex items-center justify-between w-full border-b border-zinc-50 pb-3 mb-4'>
+        <div className='flex items-center justify-between w-full border-b border-edge-subtle pb-3 mb-4'>
           <button
             type='button'
             onClick={handleBack}
-            className='p-1 -ml-1 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer'
+            className='p-1 -ml-1 text-content-secondary hover:text-content active:scale-90 transition-transform cursor-pointer'
           >
             <svg
               className='w-5 h-5'
@@ -128,7 +128,7 @@ export default function NewLeagueWizardPage() {
             </svg>
           </button>
 
-          <h1 className='text-base font-bold text-zinc-900 tracking-tight'>
+          <h1 className='text-base font-bold text-content tracking-tight'>
             {step === 5
               ? "Waiting for members"
               : step === 4
@@ -136,7 +136,7 @@ export default function NewLeagueWizardPage() {
                 : "Create a new league"}
           </h1>
 
-          <div className='w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-base border'>
+          <div className='w-8 h-8 rounded-full bg-brand-subtle flex items-center justify-center text-base border border-edge-subtle'>
             🐵
           </div>
         </div>

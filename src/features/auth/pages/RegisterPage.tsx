@@ -75,7 +75,7 @@ export default function RegisterPage() {
           type='button'
           onClick={handleBack}
           disabled={isPending}
-          className='flex-1 py-3.5 border border-zinc-200 text-zinc-700 font-semibold text-sm rounded-xl active:scale-[0.99] transition-all cursor-pointer text-center disabled:opacity-50'
+          className='flex-1 py-3.5 border border-edge bg-surface text-content-secondary font-semibold text-sm rounded-xl active:scale-[0.99] transition-all cursor-pointer text-center disabled:opacity-50 hover:border-edge-strong'
         >
           Previous Step
         </button>
@@ -84,7 +84,7 @@ export default function RegisterPage() {
         type='submit'
         form={currentFormId}
         disabled={isPending}
-        className='py-3.5 bg-zinc-800 hover:bg-zinc-900 text-white font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-1.5'
+        className='py-3.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg font-semibold text-sm rounded-xl transition-all duration-150 active:scale-[0.99] shadow-sm cursor-pointer text-center flex items-center justify-center gap-1.5'
         style={{ flex: step === 1 ? "1 1 0%" : "1.3 1 0%" }}
       >
         {isPending ? "Creating..." : `Continue ${step === 2 ? "›" : ""}`}
@@ -93,13 +93,13 @@ export default function RegisterPage() {
   );
 
   return (
-    <main className='page-content safe-top safe-bottom bg-white'>
+    <main className='page-content safe-top safe-bottom bg-surface'>
       <AppScreenLayout stickyFooter={footerAction}>
         <div className='flex items-center h-6 mb-2'>
           <button
             type='button'
             onClick={handleBack}
-            className='p-1 -ml-2 text-zinc-600 hover:text-zinc-900 active:scale-90 transition-transform cursor-pointer'
+            className='p-1 -ml-2 text-content-secondary hover:text-content active:scale-90 transition-transform cursor-pointer'
             aria-label='Back'
           >
             <img src={backArrowIcon} alt='Back' />
@@ -108,12 +108,12 @@ export default function RegisterPage() {
 
         <StepProgressBar currentStep={step} />
 
-        <h1 className='text-xl font-bold text-zinc-900 tracking-tight text-center mt-6 mb-6'>
+        <h1 className='text-xl font-bold text-content tracking-tight text-center mt-6 mb-6'>
           {STEP_TITLES[step]}
         </h1>
 
         {registerMutation.error && (
-          <div className='mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center'>
+          <div className='mb-4 p-3 bg-danger-subtle border border-danger-border rounded-xl text-xs text-danger-text font-medium text-center'>
             {registerMutation.error.message}
           </div>
         )}

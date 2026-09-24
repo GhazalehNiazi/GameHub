@@ -70,18 +70,18 @@ export function AttendeesListStep() {
     >
       {/* Informational Header Section */}
       <div className='space-y-1'>
-        <h2 className='text-sm font-bold text-zinc-900 flex items-center gap-2'>
+        <h2 className='text-sm font-bold text-content flex items-center gap-2'>
           ✓ Add Attendees for the league.
         </h2>
-        <div className='flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-100 rounded-xl'>
-          <span className='text-zinc-400 text-sm mt-0.5'>ℹ️</span>
-          <p className='text-[11px] text-zinc-500 leading-normal'>
+        <div className='flex items-start gap-3 p-3 bg-surface-subtle border border-edge-subtle rounded-xl'>
+          <span className='text-content-subtle text-sm mt-0.5'>ℹ️</span>
+          <p className='text-[11px] text-content-muted leading-normal'>
             After playing with people, you can add them as a friend to access
             them easier here. For now, search your friend's IDs and add them
           </p>
         </div>
         {errors.list?.message && (
-          <p className='text-[11px] text-red-500 font-medium pl-1 pt-1'>
+          <p className='text-[11px] text-danger font-medium pl-1 pt-1'>
             {errors.list.message}
           </p>
         )}
@@ -99,20 +99,20 @@ export function AttendeesListStep() {
             return (
               <div
                 key={field.id}
-                className='flex items-center justify-between p-3.5 bg-zinc-50 border border-zinc-200/60 rounded-xl animate-fade-in'
+                className='flex items-center justify-between p-3.5 bg-surface-subtle border border-edge rounded-xl animate-fade-in'
               >
                 <div className='flex items-center gap-2.5'>
-                  <div className='w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center text-sm'>
+                  <div className='w-7 h-7 rounded-full bg-badge-orange-bg flex items-center justify-center text-sm'>
                     {avatar}
                   </div>
-                  <span className='text-xs font-semibold text-zinc-800'>
+                  <span className='text-xs font-semibold text-content'>
                     {resolvedName}
                   </span>
                 </div>
                 <button
                   type='button'
                   onClick={() => handleRemoveClick(index)} // Uses our protective structural interceptor
-                  className='px-2.5 py-1 text-[10px] font-bold text-zinc-500 hover:text-zinc-800 bg-white border border-zinc-200 rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer flex items-center gap-1'
+                  className='px-2.5 py-1 text-[10px] font-bold text-content-muted hover:text-content bg-surface border border-edge rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer flex items-center gap-1'
                 >
                   ー Remove
                 </button>
@@ -127,7 +127,7 @@ export function AttendeesListStep() {
               className='w-full space-y-1.5 text-left animate-fade-in'
             >
               <div className='flex items-center justify-between'>
-                <label className='block text-xs font-medium text-zinc-700'>
+                <label className='block text-xs font-medium text-content-secondary'>
                   User's ID
                 </label>
 
@@ -136,7 +136,7 @@ export function AttendeesListStep() {
                   <button
                     type='button'
                     onClick={() => handleRemoveClick(index)}
-                    className='text-[10px] font-semibold text-zinc-400 hover:text-zinc-600 cursor-pointer'
+                    className='text-[10px] font-semibold text-content-subtle hover:text-content-secondary cursor-pointer'
                   >
                     Cancel
                   </button>
@@ -147,14 +147,14 @@ export function AttendeesListStep() {
                 <input
                   placeholder='ID'
                   {...register(`list.${index}.id` as const)}
-                  className='w-full pl-4 pr-20 py-3 bg-zinc-50 border border-zinc-200/80 rounded-xl text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-400 focus:bg-white transition-all'
+                  className='w-full pl-4 pr-20 py-3 bg-surface-subtle border border-edge rounded-xl text-sm text-content placeholder:text-content-subtle focus:outline-none focus:border-brand focus:bg-surface transition-all'
                 />
 
                 {currentInputValue.trim().length > 0 && (
                   <button
                     type='button'
                     onClick={() => handleAddClick(index)}
-                    className='absolute right-2 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-900 text-white text-[11px] font-bold rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer animate-fade-in'
+                    className='absolute right-2 px-3 py-1.5 bg-action-primary hover:bg-action-primary-hover text-action-primary-fg text-[11px] font-bold rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer animate-fade-in'
                   >
                     ＋ Add
                   </button>
@@ -169,7 +169,7 @@ export function AttendeesListStep() {
       <button
         type='button'
         onClick={() => append({ id: "" })}
-        className='text-xs font-bold text-zinc-800 hover:text-zinc-950 flex items-center gap-1.5 pt-1 pl-1 cursor-pointer transition-colors active:opacity-70'
+        className='text-xs font-bold text-content-secondary hover:text-content flex items-center gap-1.5 pt-1 pl-1 cursor-pointer transition-colors active:opacity-70'
       >
         <span className='text-sm'>＋</span> Add more members
       </button>

@@ -42,7 +42,7 @@ export function LeagueRulesStep() {
     >
       {/* Parameter Block 1: Format */}
       <div className='space-y-3'>
-        <h4 className='text-xs font-semibold text-zinc-700'>
+        <h4 className='text-xs font-semibold text-content-secondary'>
           Are there Single games or Home & Away?
         </h4>
         <div className='flex gap-3 w-full'>
@@ -63,7 +63,7 @@ export function LeagueRulesStep() {
 
       {/* Parameter Block 2: Tie-Breaker Priorities */}
       <div className='space-y-3'>
-        <h4 className='text-xs font-semibold text-zinc-700'>
+        <h4 className='text-xs font-semibold text-content-secondary'>
           What is the priority of the champions?
         </h4>
         <div className='flex gap-3 w-full'>
@@ -83,9 +83,9 @@ export function LeagueRulesStep() {
       </div>
 
       {/* Descriptive Disclaimer Box matching copy criteria exactly */}
-      <div className='flex items-start gap-3.5 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl'>
-        <span className='text-zinc-400 text-lg leading-none mt-0.5'>ℹ️</span>
-        <p className='text-[11px] text-zinc-500 leading-relaxed font-medium'>
+      <div className='flex items-start gap-3.5 p-4 bg-surface-subtle border border-edge-subtle rounded-2xl'>
+        <span className='text-content-subtle text-lg leading-none mt-0.5'>ℹ️</span>
+        <p className='text-[11px] text-content-muted leading-relaxed font-medium'>
           If everything gets tied in the champions method, most goals for, least
           against goals, goals for in away games, goals against in away games
           will be considered to determine the champion.

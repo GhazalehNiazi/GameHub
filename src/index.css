@@ -4,42 +4,301 @@
 @theme {
   /* Register custom font utility with modern Inter typography */
   --font-sans:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
-
-  /* Theme Tokens */
-  --color-bg: var(--bg);
-  --color-desktop-bg: var(--desktop-bg);
-  --color-text-main: var(--text-main);
-  --color-text-muted: var(--text-muted);
-  --color-border: var(--border);
-  --color-grid-dot: var(--grid-dot);
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Utilities & Dimensions */
   --max-width-mobile-frame: 390px;
+
+  /* Color Palette Tokens */
+  --color-canvas: var(--color-canvas);
+  --color-canvas-dot: var(--color-canvas-dot);
+  --color-surface: var(--color-surface);
+  --color-surface-subtle: var(--color-surface-subtle);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-surface-elevated: var(--color-surface-elevated);
+  --color-surface-inverse: var(--color-surface-inverse);
+
+  --color-content: var(--color-content);
+  --color-content-secondary: var(--color-content-secondary);
+  --color-content-muted: var(--color-content-muted);
+  --color-content-subtle: var(--color-content-subtle);
+  --color-content-inverse: var(--color-content-inverse);
+
+  --color-edge: var(--color-edge);
+  --color-edge-subtle: var(--color-edge-subtle);
+  --color-edge-strong: var(--color-edge-strong);
+
+  --color-action-primary: var(--color-action-primary);
+  --color-action-primary-hover: var(--color-action-primary-hover);
+  --color-action-primary-fg: var(--color-action-primary-fg);
+
+  --color-brand: var(--color-brand);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-brand-subtle: var(--color-brand-subtle);
+  --color-brand-fg: var(--color-brand-fg);
+  --color-brand-text: var(--color-brand-text);
+  --color-brand-border: var(--color-brand-border);
+
+  --color-success: var(--color-success);
+  --color-success-subtle: var(--color-success-subtle);
+  --color-success-text: var(--color-success-text);
+  --color-success-border: var(--color-success-border);
+
+  --color-warning: var(--color-warning);
+  --color-warning-subtle: var(--color-warning-subtle);
+  --color-warning-text: var(--color-warning-text);
+  --color-warning-border: var(--color-warning-border);
+
+  --color-danger: var(--color-danger);
+  --color-danger-subtle: var(--color-danger-subtle);
+  --color-danger-hover: var(--color-danger-hover);
+  --color-danger-text: var(--color-danger-text);
+  --color-danger-border: var(--color-danger-border);
+
+  --color-badge-purple-bg: var(--color-badge-purple-bg);
+  --color-badge-purple-text: var(--color-badge-purple-text);
+  --color-badge-orange-bg: var(--color-badge-orange-bg);
+  --color-badge-orange-text: var(--color-badge-orange-text);
+  --color-badge-pink-bg: var(--color-badge-pink-bg);
+  --color-badge-pink-hover: var(--color-badge-pink-hover);
+  --color-badge-pink-text: var(--color-badge-pink-text);
+
+  --color-banner-bg: var(--color-banner-bg);
+  --color-banner-border: var(--color-banner-border);
+  --color-banner-fg: var(--color-banner-fg);
+  --color-banner-subtle: var(--color-banner-subtle);
+
+  /* Design System Palette Swatches (named palette) */
+  --color-palette-obsidian: #111622;
+  --color-palette-charcoal: #212121;
+  --color-palette-divider: #e2e7f0;
+  --color-palette-input-border: #e0e0e0;
+  --color-palette-mint: #10b981;
+  --color-palette-icon-slate: #454545;
+  --color-palette-icon-dark: #252525;
+
+  /* Aliases */
+  --color-primary: var(--color-action-primary);
+  --color-primary-hover: var(--color-action-primary-hover);
+  --color-primary-fg: var(--color-action-primary-fg);
+  --color-border: var(--color-edge);
+  --color-border-subtle: var(--color-edge-subtle);
+  --color-border-strong: var(--color-edge-strong);
+
+  /* Legacy aliases for backwards compatibility */
+  --color-bg: var(--color-surface);
+  --color-desktop-bg: var(--color-canvas);
+  --color-text-main: var(--color-content);
+  --color-text-muted: var(--color-content-muted);
+  --color-grid-dot: var(--color-canvas-dot);
 }
 
-/* Define Theme Tokens via standard CSS Cascade */
-@layer base {
-  :root {
-    --bg: #ffffff;
-    --desktop-bg: #f8fafc;
-    --text-main: #212121;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
-    --grid-dot: #e2e8f0;
-  }
+/* Light Mode Tokens (Default) */
+:root,
+[data-theme="light"] {
+  --color-canvas: #f0f3f8;
+  --color-canvas-dot: #d8e0eb;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f4f6fa;
+  --color-surface-muted: #e9eef5;
+  --color-surface-elevated: #ffffff;
+  --color-surface-inverse: #111622;
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #121212;
-      --desktop-bg: #09090b;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #27272a;
-      --grid-dot: #27272a;
-    }
+  --color-content: #111622;
+  --color-content-secondary: #475467;
+  --color-content-muted: #78869c;
+  --color-content-subtle: #9eabbf;
+  --color-content-inverse: #ffffff;
+
+  --color-edge: #e2e7f0;
+  --color-edge-subtle: #eef2f7;
+  --color-edge-strong: #cbd5e1;
+
+  --color-action-primary: #111622;
+  --color-action-primary-hover: #222938;
+  --color-action-primary-fg: #ffffff;
+
+  --color-brand: #5452f6;
+  --color-brand-hover: #4340e6;
+  --color-brand-subtle: rgba(84, 82, 246, 0.08);
+  --color-brand-fg: #ffffff;
+  --color-brand-text: #4340e6;
+  --color-brand-border: rgba(84, 82, 246, 0.35);
+
+  --color-success: #059669;
+  --color-success-subtle: rgba(5, 150, 105, 0.1);
+  --color-success-text: #047857;
+  --color-success-border: rgba(5, 150, 105, 0.25);
+
+  --color-warning: #d97706;
+  --color-warning-subtle: rgba(217, 119, 6, 0.1);
+  --color-warning-text: #b45309;
+  --color-warning-border: rgba(217, 119, 6, 0.25);
+
+  --color-danger: #e11d48;
+  --color-danger-subtle: rgba(225, 29, 72, 0.08);
+  --color-danger-hover: rgba(225, 29, 72, 0.14);
+  --color-danger-text: #be123c;
+  --color-danger-border: rgba(225, 29, 72, 0.25);
+
+  --color-badge-purple-bg: #ede9fe;
+  --color-badge-purple-text: #6d28d9;
+  --color-badge-orange-bg: #ffedd5;
+  --color-badge-orange-text: #c2410c;
+  --color-badge-pink-bg: #ffe4e6;
+  --color-badge-pink-hover: #fecdd3;
+  --color-badge-pink-text: #e11d48;
+
+  --color-banner-bg: #151924;
+  --color-banner-border: rgba(84, 82, 246, 0.25);
+  --color-banner-fg: #ffffff;
+  --color-banner-subtle: #a3b0c2;
+
+  /* Legacy references */
+  --bg: var(--color-surface);
+  --desktop-bg: var(--color-canvas);
+  --text-main: var(--color-content);
+  --text-muted: var(--color-content-muted);
+  --border: var(--color-edge);
+  --grid-dot: var(--color-canvas-dot);
+}
+
+/* Dark Mode Tokens (via OS preference or dark class/data-theme) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-canvas: #090c12;
+    --color-canvas-dot: #182030;
+    --color-surface: #121722;
+    --color-surface-subtle: #181f2e;
+    --color-surface-muted: #1f283b;
+    --color-surface-elevated: #1b2233;
+    --color-surface-inverse: #f4f6fa;
+
+    --color-content: #f3f6fb;
+    --color-content-secondary: #a1adc2;
+    --color-content-muted: #6d7c92;
+    --color-content-subtle: #526077;
+    --color-content-inverse: #0f141f;
+
+    --color-edge: #232c3d;
+    --color-edge-subtle: #1a2230;
+    --color-edge-strong: #35425a;
+
+    --color-action-primary: #f3f6fb;
+    --color-action-primary-hover: #ffffff;
+    --color-action-primary-fg: #0f141f;
+
+    --color-brand: #7573f8;
+    --color-brand-hover: #8886fa;
+    --color-brand-subtle: rgba(117, 115, 248, 0.16);
+    --color-brand-fg: #ffffff;
+    --color-brand-text: #8886fa;
+    --color-brand-border: rgba(117, 115, 248, 0.4);
+
+    --color-success: #10b981;
+    --color-success-subtle: rgba(16, 185, 129, 0.18);
+    --color-success-text: #34d399;
+    --color-success-border: rgba(16, 185, 129, 0.35);
+
+    --color-warning: #f59e0b;
+    --color-warning-subtle: rgba(245, 158, 11, 0.18);
+    --color-warning-text: #fbbf24;
+    --color-warning-border: rgba(245, 158, 11, 0.35);
+
+    --color-danger: #f43f5e;
+    --color-danger-subtle: rgba(244, 63, 94, 0.16);
+    --color-danger-hover: rgba(244, 63, 94, 0.24);
+    --color-danger-text: #fb7185;
+    --color-danger-border: rgba(244, 63, 94, 0.35);
+
+    --color-badge-purple-bg: rgba(139, 92, 246, 0.2);
+    --color-badge-purple-text: #c4b5fd;
+    --color-badge-orange-bg: rgba(249, 115, 22, 0.2);
+    --color-badge-orange-text: #fdba74;
+    --color-badge-pink-bg: rgba(244, 63, 94, 0.16);
+    --color-badge-pink-hover: rgba(244, 63, 94, 0.26);
+    --color-badge-pink-text: #fda4af;
+
+    --color-banner-bg: #161c28;
+    --color-banner-border: rgba(117, 115, 248, 0.3);
+    --color-banner-fg: #ffffff;
+    --color-banner-subtle: #8c9bb0;
+
+    --bg: var(--color-surface);
+    --desktop-bg: var(--color-canvas);
+    --text-main: var(--color-content);
+    --text-muted: var(--color-content-muted);
+    --border: var(--color-edge);
+    --grid-dot: var(--color-canvas-dot);
   }
+}
+
+.dark,
+[data-theme="dark"] {
+  --color-canvas: #090c12;
+  --color-canvas-dot: #182030;
+  --color-surface: #121722;
+  --color-surface-subtle: #181f2e;
+  --color-surface-muted: #1f283b;
+  --color-surface-elevated: #1b2233;
+  --color-surface-inverse: #f4f6fa;
+
+  --color-content: #f3f6fb;
+  --color-content-secondary: #a1adc2;
+  --color-content-muted: #6d7c92;
+  --color-content-subtle: #526077;
+  --color-content-inverse: #0f141f;
+
+  --color-edge: #232c3d;
+  --color-edge-subtle: #1a2230;
+  --color-edge-strong: #35425a;
+
+  --color-action-primary: #f3f6fb;
+  --color-action-primary-hover: #ffffff;
+  --color-action-primary-fg: #0f141f;
+
+  --color-brand: #7573f8;
+  --color-brand-hover: #8886fa;
+  --color-brand-subtle: rgba(117, 115, 248, 0.16);
+  --color-brand-fg: #ffffff;
+  --color-brand-text: #8886fa;
+  --color-brand-border: rgba(117, 115, 248, 0.4);
+
+  --color-success: #10b981;
+  --color-success-subtle: rgba(16, 185, 129, 0.18);
+  --color-success-text: #34d399;
+  --color-success-border: rgba(16, 185, 129, 0.35);
+
+  --color-warning: #f59e0b;
+  --color-warning-subtle: rgba(245, 158, 11, 0.18);
+  --color-warning-text: #fbbf24;
+  --color-warning-border: rgba(245, 158, 11, 0.35);
+
+  --color-danger: #f43f5e;
+  --color-danger-subtle: rgba(244, 63, 94, 0.16);
+  --color-danger-hover: rgba(244, 63, 94, 0.24);
+  --color-danger-text: #fb7185;
+  --color-danger-border: rgba(244, 63, 94, 0.35);
+
+  --color-badge-purple-bg: rgba(139, 92, 246, 0.2);
+  --color-badge-purple-text: #c4b5fd;
+  --color-badge-orange-bg: rgba(249, 115, 22, 0.2);
+  --color-badge-orange-text: #fdba74;
+  --color-badge-pink-bg: rgba(244, 63, 94, 0.16);
+  --color-badge-pink-hover: rgba(244, 63, 94, 0.26);
+  --color-badge-pink-text: #fda4af;
+
+  --color-banner-bg: #161c28;
+  --color-banner-border: rgba(117, 115, 248, 0.3);
+  --color-banner-fg: #ffffff;
+  --color-banner-subtle: #8c9bb0;
+
+  --bg: var(--color-surface);
+  --desktop-bg: var(--color-canvas);
+  --text-main: var(--color-content);
+  --text-muted: var(--color-content-muted);
+  --border: var(--color-edge);
+  --grid-dot: var(--color-canvas-dot);
 }
 
 /* Layout Structure */
@@ -49,13 +308,15 @@
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background-color: var(--desktop-bg);
-  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-color: var(--color-canvas);
+  background-image: radial-gradient(
+    var(--color-canvas-dot) 1px,
+    transparent 1px
+  );
   background-size: 20px 20px;
 
-  /* Applies Inter automatically as the primary font */
   font-family: var(--font-sans);
-  color: var(--text-main);
+  color: var(--color-content);
 }
 
 @layer base {
@@ -83,17 +344,16 @@
   max-height: 100dvh;
   min-height: 100dvh;
 
-  /* PWA Safe Area support for status bar notch & home indicator */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 
-  background-color: var(--bg);
+  background-color: var(--color-surface);
   box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
+  border-left: 1px solid var(--color-edge);
+  border-right: 1px solid var(--color-edge);
 }
 
 /* Base layout rule for EVERY page component root */
@@ -103,12 +363,14 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background-color: var(--color-surface);
+  color: var(--color-content);
 }
 
 @media (max-width: 430px) {
   #root {
     background-image: none;
-    background-color: var(--bg);
+    background-color: var(--color-surface);
   }
   .mobile-frame {
     max-width: 100%;

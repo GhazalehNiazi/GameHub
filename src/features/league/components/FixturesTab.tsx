@@ -24,8 +24,8 @@ export function FixturesTab({
           onChange={(e) => setShowUpcomingOnly(e.target.checked)}
           className='sr-only peer'
         />
-        <div className="w-9 h-5 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-zinc-800 relative" />
-        <span className='text-xs font-medium text-zinc-600'>
+        <div className="w-9 h-5 bg-surface-muted peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface after:border-edge-strong after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand relative" />
+        <span className='text-xs font-medium text-content-secondary'>
           Show upcoming games first
         </span>
       </label>
@@ -40,7 +40,7 @@ export function FixturesTab({
 
           return (
             <div key={day} className='space-y-3'>
-              <h3 className='text-xs font-bold text-zinc-800 tracking-tight'>
+              <h3 className='text-xs font-bold text-content tracking-tight'>
                 Matchday {day}
               </h3>
               <div className='space-y-3'>

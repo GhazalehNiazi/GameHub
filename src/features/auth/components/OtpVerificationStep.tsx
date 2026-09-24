@@ -151,12 +151,12 @@ export function OtpVerificationStep({
       onSubmit={handleSubmit(onSubmit)}
       className='space-y-5 animate-fade-in text-center w-full'
     >
-      <p className='text-xs text-[#212121] text-left leading-relaxed'>
-        A 5 number code has been texted to {phone ? <span className='font-medium text-zinc-900'>{phone}</span> : "your number"}, please enter it below
+      <p className='text-xs text-content text-left leading-relaxed'>
+        A 5 number code has been texted to {phone ? <span className='font-medium text-content'>{phone}</span> : "your number"}, please enter it below
       </p>
 
       {displaySuccessMessage && (
-        <div className='p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-700 text-center animate-fade-in'>
+        <div className='p-2.5 bg-success-subtle border border-success-border rounded-xl text-xs text-success-text text-center animate-fade-in'>
           {displaySuccessMessage}
         </div>
       )}
@@ -179,21 +179,21 @@ export function OtpVerificationStep({
             onChange={(e) => handleOtpChange(e.target.value, idx)}
             onKeyDown={(e) => handleOtpKeyDown(e, idx)}
             onPaste={handlePaste}
-            className={`flex-1 max-w-[58px] min-w-0 h-14 bg-white border ${
-              errors.otp ? "border-red-500" : "border-[#E0E0E0]"
-            } text-zinc-900 text-lg font-bold rounded-xl text-center focus:outline-none focus:border-zinc-900 transition-colors disabled:opacity-50 disabled:bg-zinc-50`}
+            className={`flex-1 max-w-[58px] min-w-0 h-14 bg-surface border ${
+              errors.otp ? "border-danger" : "border-edge"
+            } text-content text-lg font-bold rounded-xl text-center focus:outline-none focus:border-brand transition-colors disabled:opacity-50 disabled:bg-surface-subtle`}
           />
         ))}
       </div>
 
       {errors.otp && (
-        <p className='text-[10px] text-red-500 text-center'>
+        <p className='text-[10px] text-danger text-center'>
           {errors.otp.message}
         </p>
       )}
 
       {timeLeft > 0 ? (
-        <div className='flex items-center justify-center gap-5 text-xs text-zinc-800 px-1 pt-1'>
+        <div className='flex items-center justify-center gap-5 text-xs text-content-secondary px-1 pt-1'>
           <span>Code Accountability</span>
           <span className='font-mono font-medium'>{formattedTime}</span>
         </div>
@@ -203,11 +203,11 @@ export function OtpVerificationStep({
             type='button'
             onClick={handleResend}
             disabled={isResending}
-            className='text-xs font-semibold text-zinc-800 hover:text-zinc-950 underline underline-offset-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1.5'
+            className='text-xs font-semibold text-content-secondary hover:text-content underline underline-offset-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1.5'
           >
             {isResending ? (
               <>
-                <span className='inline-block w-3 h-3 border-2 border-zinc-400 border-t-zinc-800 rounded-full animate-spin' />
+                <span className='inline-block w-3 h-3 border-2 border-content-subtle border-t-content rounded-full animate-spin' />
                 <span>Sending code...</span>
               </>
             ) : (

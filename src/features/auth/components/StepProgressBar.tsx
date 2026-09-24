@@ -11,13 +11,13 @@ export function StepProgressBar({ currentStep }: StepProgressBarProps) {
           <div
             key={step}
             style={{ flex: isActive ? "2.8 1 0%" : "1 1 0%" }}
-            className={`h-7 rounded-full border-2 border-teal-500 transition-all duration-300 ease-in-out flex items-center justify-center ${
-              isCompleted || isActive ? "bg-teal-500" : "bg-white"
+            className={`h-7 rounded-full border-2 border-brand transition-all duration-300 ease-in-out flex items-center justify-center ${
+              isCompleted || isActive ? "bg-brand" : "bg-surface"
             }`}
           >
             {isCompleted && (
               <svg
-                className='w-4 h-4 text-white'
+                className='w-4 h-4 text-brand-fg'
                 fill='none'
                 stroke='currentColor'
                 strokeWidth='2.5'

@@ -60,10 +60,10 @@ export function InstallBanner({ onDismiss }: InstallBannerProps) {
   };
 
   return (
-    <div className='mx-4 my-3 p-4 bg-gradient-to-r from-zinc-900 via-indigo-950/40 to-zinc-900 text-white rounded-2xl shadow-2xl border border-indigo-500/20 backdrop-blur-md transition-all duration-300 animate-fade-in'>
+    <div className='mx-4 my-3 p-4 bg-banner-bg text-banner-fg rounded-2xl shadow-2xl border border-banner-border backdrop-blur-md transition-all duration-300 animate-fade-in'>
       <div className='flex items-center gap-3'>
         {/* App Icon Badge */}
-        <div className='w-12 h-12 rounded-xl bg-indigo-600 p-0.5 shadow-md shrink-0 overflow-hidden'>
+        <div className='w-12 h-12 rounded-xl bg-brand p-0.5 shadow-md shrink-0 overflow-hidden'>
           <img
             src='/pwa-192x192.png'
             alt='GameHub App Icon'
@@ -72,20 +72,20 @@ export function InstallBanner({ onDismiss }: InstallBannerProps) {
         </div>
 
         <div className='flex-1 min-w-0'>
-          <h4 className='font-bold text-sm tracking-tight text-white flex items-center gap-1.5'>
+          <h4 className='font-bold text-sm tracking-tight text-banner-fg flex items-center gap-1.5'>
             Install GameHub
-            <span className='text-[10px] font-medium px-1.5 py-0.2 rounded bg-indigo-500/30 text-indigo-300 border border-indigo-400/30'>
+            <span className='text-[10px] font-medium px-1.5 py-0.2 rounded bg-brand-subtle text-brand border border-brand-border'>
               App
             </span>
           </h4>
 
           {isIOS ? (
-            <p className='text-xs text-zinc-300 mt-0.5 leading-tight'>
-              Tap <span className='font-semibold text-white'>Share ⎋</span> then{" "}
-              <span className='font-semibold text-white'>"Add to Home Screen"</span>
+            <p className='text-xs text-banner-subtle mt-0.5 leading-tight'>
+              Tap <span className='font-semibold text-banner-fg'>Share ⎋</span> then{" "}
+              <span className='font-semibold text-banner-fg'>"Add to Home Screen"</span>
             </p>
           ) : (
-            <p className='text-xs text-zinc-300 mt-0.5 leading-tight truncate'>
+            <p className='text-xs text-banner-subtle mt-0.5 leading-tight truncate'>
               Fast loading, offline access & full screen.
             </p>
           )}
@@ -96,14 +96,14 @@ export function InstallBanner({ onDismiss }: InstallBannerProps) {
           {canInstall && !isIOS && (
             <button
               onClick={handleInstallClick}
-              className='px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-semibold text-xs rounded-xl shadow-md transition-all cursor-pointer'
+              className='px-3.5 py-1.5 bg-brand hover:bg-brand-hover active:scale-95 text-brand-fg font-semibold text-xs rounded-xl shadow-md transition-all cursor-pointer'
             >
               Install
             </button>
           )}
           <button
             onClick={handleManualDismiss}
-            className='p-1.5 text-zinc-400 hover:text-white rounded-lg active:scale-90 transition-transform'
+            className='p-1.5 text-banner-subtle hover:text-banner-fg rounded-lg active:scale-90 transition-transform'
             aria-label='Close install banner'
           >
             ✕

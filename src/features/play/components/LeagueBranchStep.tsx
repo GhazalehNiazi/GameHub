@@ -7,7 +7,7 @@ export function LeagueBranchStep() {
   return (
     <div className='space-y-6 animate-fade-in text-left'>
       <div className='space-y-4'>
-        <p className='text-xs text-zinc-500 font-medium'>
+        <p className='text-xs text-content-muted font-medium'>
           Select how you want to create a new leagues.
         </p>
 
@@ -30,13 +30,13 @@ export function LeagueBranchStep() {
 
       {/* Ongoing Leagues Subsection Section */}
       <div className='space-y-3 pt-2'>
-        <h4 className='text-xs font-bold text-zinc-800 tracking-tight'>
+        <h4 className='text-xs font-bold text-content tracking-tight'>
           Ongoing Leagues
         </h4>
 
-        <div className='flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl'>
-          <span className='text-zinc-400 text-sm mt-0.5'>ℹ️</span>
-          <p className='text-xs text-zinc-500 leading-normal font-medium'>
+        <div className='flex items-start gap-3 p-4 bg-surface-subtle border border-edge-subtle rounded-2xl'>
+          <span className='text-content-muted text-sm mt-0.5'>ℹ️</span>
+          <p className='text-xs text-content-muted leading-normal font-medium'>
             List of your ongoing leagues will be shown here, currently there is
             no open league
           </p>

@@ -1,33 +1,35 @@
-import { StrictMode, useState, useEffect } from 'react'
-import { createRoot } from 'react-dom/client'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from './shared/lib/queryClient'
-import { registerSW } from 'virtual:pwa-register'
-import { UpdateToast } from './shared/components/pwa/UpdateToast'
-import './index.css'
-import App from './App'
+import { StrictMode, useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./shared/lib/queryClient";
+import { registerSW } from "virtual:pwa-register";
+import { UpdateToast } from "./shared/components/pwa/UpdateToast";
+import "./index.css";
+import App from "./App";
 
 function MainApp() {
-  const [needRefresh, setNeedRefresh] = useState(false)
-  const [updateSWHandler, setUpdateSWHandler] = useState<((reloadPage?: boolean) => Promise<void>) | null>(null)
+  const [needRefresh, setNeedRefresh] = useState(false);
+  const [updateSWHandler, setUpdateSWHandler] = useState<
+    ((reloadPage?: boolean) => Promise<void>) | null
+  >(null);
 
   useEffect(() => {
     const updateSW = registerSW({
       onNeedRefresh() {
-        setNeedRefresh(true)
+        setNeedRefresh(true);
       },
       onOfflineReady() {
-        console.info('GameHub is ready to work offline')
+        console.info("GameHub is ready to work offline");
       },
-    })
-    setUpdateSWHandler(() => updateSW)
-  }, [])
+    });
+    setUpdateSWHandler(() => updateSW);
+  }, []);
 
   const handleUpdate = () => {
     if (updateSWHandler) {
-      updateSWHandler(true)
+      updateSWHandler(true);
     }
-  }
+  };
 
   return (
     <StrictMode>
@@ -40,7 +42,7 @@ function MainApp() {
         <App />
       </QueryClientProvider>
     </StrictMode>
-  )
+  );
 }
 
-createRoot(document.getElementById('root')!).render(<MainApp />)
+createRoot(document.getElementById("root")!).render(<MainApp />);

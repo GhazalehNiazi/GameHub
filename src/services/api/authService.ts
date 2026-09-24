@@ -21,7 +21,7 @@ export const authService = {
     localStorage.setItem("pending_auth_phone", payload.phone);
     console.info(
       `%c[Mock API] OTP Code dispatched for ${payload.prefix || ""}${payload.phone}. Use code: 12345 (or any 5 digits; use 00000 to test failure)`,
-      "color: #10b981; font-weight: bold;"
+      "color: var(--color-success); font-weight: bold;"
     );
 
     return mockApiResponse({

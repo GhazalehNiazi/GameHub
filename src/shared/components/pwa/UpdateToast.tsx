@@ -21,11 +21,11 @@ export function UpdateToast({
   };
 
   return (
-    <div className='fixed top-4 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-sm p-4 bg-indigo-950 text-white border border-indigo-700/80 rounded-2xl shadow-2xl backdrop-blur-md transition-all duration-300 animate-bounce-short flex items-center justify-between gap-3'>
+    <div className='fixed top-4 left-1/2 -translate-x-1/2 z-50 w-11/12 max-w-sm p-4 bg-banner-bg text-banner-fg border border-banner-border rounded-2xl shadow-2xl backdrop-blur-md transition-all duration-300 animate-bounce-short flex items-center justify-between gap-3'>
       <div className='flex items-center gap-3'>
-        <div className='w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center shrink-0 shadow-inner'>
+        <div className='w-9 h-9 rounded-full bg-brand flex items-center justify-center shrink-0 shadow-inner'>
           <svg
-            className='w-5 h-5 text-white animate-spin-slow'
+            className='w-5 h-5 text-brand-fg animate-spin-slow'
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
@@ -39,10 +39,10 @@ export function UpdateToast({
           </svg>
         </div>
         <div>
-          <h5 className='text-xs font-bold text-white tracking-wide uppercase'>
+          <h5 className='text-xs font-bold text-banner-fg tracking-wide uppercase'>
             Update Available
           </h5>
-          <p className='text-xs text-indigo-200 mt-0.5'>
+          <p className='text-xs text-banner-subtle mt-0.5'>
             A new version of GameHub is ready.
           </p>
         </div>
@@ -51,13 +51,13 @@ export function UpdateToast({
       <div className='flex items-center gap-2 shrink-0'>
         <button
           onClick={onUpdate}
-          className='px-3 py-1.5 bg-indigo-500 hover:bg-indigo-400 active:scale-95 text-white font-semibold text-xs rounded-xl shadow-md transition-all cursor-pointer'
+          className='px-3 py-1.5 bg-brand hover:bg-brand-hover active:scale-95 text-brand-fg font-semibold text-xs rounded-xl shadow-md transition-all cursor-pointer'
         >
           Update
         </button>
         <button
           onClick={handleDismiss}
-          className='p-1 text-indigo-300 hover:text-white transition-colors text-sm'
+          className='p-1 text-banner-subtle hover:text-banner-fg transition-colors text-sm'
           aria-label='Dismiss update'
         >
           ✕

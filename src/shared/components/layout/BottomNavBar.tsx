@@ -13,7 +13,7 @@ export function BottomNavBar() {
   ];
 
   return (
-    <nav className='w-full bg-white rounded-2xl border border-zinc-100 shadow-xl shadow-zinc-200/50 flex items-center justify-around py-3 px-2'>
+    <nav className='w-full bg-surface-elevated rounded-2xl border border-edge shadow-xl flex items-center justify-around py-3 px-2'>
       {tabs.map((tab) => {
         const isActive =
           location.pathname === tab.path ||
@@ -32,7 +32,7 @@ export function BottomNavBar() {
             </span>
             <span
               className={`text-[10px] mt-1 font-medium transition-colors ${
-                isActive ? "text-zinc-900 font-bold" : "text-zinc-400"
+                isActive ? "text-brand font-bold" : "text-content-subtle"
               }`}
             >
               {tab.label}
